@@ -1,0 +1,88 @@
+@import "src/@fuse/scss/fuse";
+
+.contact-form-dialog {
+
+    @include media-breakpoint('xs') {
+        width: 100%;
+    }
+
+    @include media-breakpoint-up('xs') {
+        width: 100%;
+    }
+
+    .mat-dialog-container {
+        padding: 0;
+
+        .mat-toolbar {
+            flex: 1 0 auto;
+            min-height: initial;
+        }
+
+        .toolbar-bottom {
+            height: auto;
+        }
+    }
+
+    .dialog-content-wrapper {
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /*radio*/
+
+    .example-radio-group {
+      display: inline-flex;
+      flex-direction: column;
+    }
+
+    .example-radio-button {
+      margin-bottom: 10px;
+    }
+
+    
+    /*multiselect*/
+    .example-additional-selection {
+        opacity: 0.75;
+        font-size: 0.75em;
+    }
+
+    
+    .text-danger {
+        color: red;
+    }
+
+   /* input text area*/
+    .example-form {
+        min-width: 150px;
+        max-width: 150%;
+        width: 150%;
+    }
+
+    .example-full-width {
+        width: 150%;
+    }
+
+
+}
+
+.fa{
+    font-size:1.8vmin;
+}
+
+.img
+{
+    width:22%;
+    height:22%;
+}
+
+.pointer
+{
+    cursor:pointer;
+}
+
+.example-input-label,
+.example-add-tab-button,
+.example-delete-tab-button {
+    margin: 8px;
+}

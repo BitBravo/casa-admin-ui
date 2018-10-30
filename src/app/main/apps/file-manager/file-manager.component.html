@@ -1,0 +1,69 @@
+<div id="file-manager" class="page-layout simple right-sidebar inner-sidebar inner-scroll">
+
+        <!-- HEADER -->
+    <div class="header mat-accent-bg p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start start"
+         fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+
+            <!-- APP TITLE -->
+            <div *ngIf="list && showMenu" fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-md
+                        (click)="toggleSidebar('file-manager-main-sidebar')">
+                    <mat-icon>menu</mat-icon>
+                </button>
+
+                <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon class="logo-icon mr-16"
+                              [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">folder
+                    </mat-icon>
+                    <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                        Resource Manager
+                    </span>
+                </div>
+
+            </div>
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            <div *ngIf="list && showMenu" class="search-input-wrapper mt-16 ml-8 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+                <label for="search" class="mr-8">
+                    <mat-icon>search</mat-icon>
+                </label>
+                <mat-form-field mat-no-float class="m-0" floatLabel="never">
+                    <input matInput [formControl]="searchInput" id="search" placeholder="Search for anything">
+                </mat-form-field>
+            </div>
+                <!-- / SEARCH -->
+                                <!-- ADD role BUTTON -->
+            <button *ngIf="showAdd && list" mat-fab class="mat-accent-bg add-button" 
+					 (click)="newUpload()" aria-label="add file"
+                        [@animate]="{value:'*', params:{delay:'300ms',scale:'0.2'}}">
+                    <mat-icon class = "mat-icon ng-tns-c44-62 material-icons" >add</mat-icon>
+                </button>
+            <!-- / ADD FILE BUTTON -->
+            <button *ngIf="!list || !showMenu" class="p-8" mat-button fxLayout="row" fxLayoutAlign="start center" (click)="back()">
+                <mat-icon class="mr-8">arrow_back</mat-icon>
+                <span class="text-uppercase">Back</span>
+            </button>
+
+        </div>
+        <!-- / HEADER -->
+
+
+        <selected-bar  class="mat-accent-600-bg" *ngIf="hasSelectedFiles" [@slideInTop] ></selected-bar>
+
+
+        <div class="center" fxFlex>
+            <!-- CONTENT -->
+            <div class="content mat-white-bg" fusePerfectScrollbar>
+                <file-list *ngIf="list" (listEditEvent) ="listEditEventHander($event)"></file-list>
+                <div *ngIf="!list && add" >
+                    <contacts-contact-form-dialog></contacts-contact-form-dialog>
+                </div>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+    <!-- / CENTER -->
+</div>

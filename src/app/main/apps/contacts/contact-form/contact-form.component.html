@@ -1,0 +1,90 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{dialogTitle}}</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+
+        <mat-toolbar-row class="toolbar-bottom py-16" fxLayout="column" fxLayoutAlign="center center">
+            <div class="contact-name mt-8">{{contact.first_name}} {{contact.last_name}}</div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+        <h4 class="text-danger text-center">{{register}}</h4>
+
+    <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
+
+        <form [formGroup]="contactForm">  
+            <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field fxFlex>
+                    <mat-icon matPrefix class="mr-12 s-20 secondary-text">account_circle</mat-icon>
+                    <input name="first_name" formControlName="first_name" placeholder="Firstname" matInput required>
+
+                </mat-form-field>
+            </div>
+            <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field fxFlex>
+                    <mat-icon matPrefix class="mr-12 s-20 secondary-text">account_circle</mat-icon>
+                    <input name="last_name" formControlName="last_name" placeholder="Lastname" matInput required>
+                </mat-form-field>
+            </div>
+            <div  *ngIf="action !=='edit'" class="mb-24" fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field fxFlex>
+                    <mat-icon matPrefix class="mr-12 s-20 secondary-text">key</mat-icon>
+                    <input formControlName="password"  type="password" placeholder="Password" matInput required>
+                </mat-form-field>
+            </div>
+
+            <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field fxFlex>
+                    <mat-icon matPrefix class="mr-12 s-20 secondary-text">email</mat-icon>
+                    <input name="email" formControlName="email" matInput type="email" placeholder="Email" matInput required>
+                </mat-form-field>
+            </div>
+
+
+            <div class="mb-24" fxLayout="row" fxLayoutAlign="start start"> 
+                 
+                    <mat-radio-group class="example-radio-group"  formControlName="role">
+                        <mat-radio-button class="example-radio-button" *ngFor="let roli of roles" [value]="roli" [checked]="roli === role" >
+                        {{roli}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+            </div>
+
+            
+            <div class="mb-24" fxLayout="row" fxLayoutAlign="start start"> 
+                <mat-form-field *ngIf="userRoles" class="w-45-p">
+                    <mat-select placeholder="Roles" name="customer_role" formControlName="customer_role" >
+                        <mat-option *ngFor="let role of userRoles" [value]="role.name">{{role.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>    
+
+        </form>
+
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
+
+        <button *ngIf="action !=='edit'"
+                mat-raised-button
+                (click)="addAdmin(contactForm)"
+                class="save-button mat-accent"
+                [disabled]="contactForm.invalid"
+                aria-label="SAVE">
+            SAVE
+        </button>
+        <button *ngIf="action ==='edit'"
+                mat-raised-button
+                (click)="updateAdmin(contactForm)"
+                class="save-button mat-accent"
+                [disabled]="contactForm.invalid"
+                aria-label="SAVE">
+            SAVE
+        </button>
+
+    </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{dialogTitle}}</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+
+        <mat-toolbar-row class="toolbar-bottom py-16" fxLayout="column" fxLayoutAlign="center center">
+            <div class="role-name mt-8">{{title}}</div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+        <h4 class="text-danger text-center">{{register}}</h4>
+
+    <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
+
+        <form [formGroup]="roleForm">  
+            <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field fxFlex>
+                    <mat-icon matPrefix class="mr-12 s-20 secondary-text">account_circle</mat-icon>
+                    <input name="userrole" formControlName="name" placeholder="Type" matInput required>
+
+                </mat-form-field>
+            </div>
+            
+            <div class="w-80 h-80">
+             <img *ngIf="default_image!=''" src="{{default_image}}">
+            </div>
+               <div *ngIf="uploadFile!=null" class="attachment" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div>
+                        <span class="filename">{{uploadFile.name}}</span>
+                        <span class="size">({{exactSize}})</span>
+                    </div>
+
+                    <button mat-icon-button aria-label="Delete attachment">
+                        <mat-icon class="s-16" (click)="deleteFile()">close</mat-icon>
+                    </button>
+                </div>
+        </form>
+
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
+
+<div>
+        <button *ngIf="action !=='edit'"
+                mat-raised-button
+                (click)="addRole(roleForm)"
+                class="save-button mat-accent"
+                [disabled]="roleForm.invalid"
+                aria-label="SAVE">
+            SAVE
+        </button>
+        <button *ngIf="action ==='edit'"
+                mat-raised-button
+                (click)="updateRole(roleForm)"
+                class="save-button mat-accent"
+                [disabled]="roleForm.invalid"
+                aria-label="SAVE">
+            SAVE
+        </button>
+
+        <input hidden type="file" (change)="fileChanged($event)" #fileInput/>
+                 <button mat-icon-button matTooltip="Attach a file" (click)="fileInput.click()">
+                <mat-icon>attach_file</mat-icon>
+            </button>
+</div>
+    </div>
+</div>
+<!--(click)="_matDialogRef.close(roleForm)"-->

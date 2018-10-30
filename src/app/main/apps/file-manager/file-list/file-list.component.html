@@ -1,0 +1,108 @@
+
+<div *ngIf="!list">
+    <contacts-contact-form-dialog [content]="selectedFile"  
+        (nameEvent)="nameEventHander($event)">
+</contacts-contact-form-dialog>
+</div>
+<br>
+<div  id="products" class="page-layout carded fullwidth inner-scroll"  [ngStyle]="{'display':list ? '' : 'none' }">
+   <div class="center">
+    <div class="content-card mat-white-bg">
+
+<mat-table #table [dataSource]="dataSource" class="products-table" [@animateStagger]="{value:'50'}"  matSort>
+
+    <!-- Checkbox Column -->
+	<ng-container cdkColumnDef="checkbox">
+        <mat-header-cell *cdkHeaderCellDef></mat-header-cell>
+        <mat-cell *cdkCellDef="let row">
+            <mat-checkbox [(ngModel)]="checkboxes[row._id]" (ngModelChange)="onSelectedChange(row._id)"
+                          (click)="$event.stopPropagation()">
+            </mat-checkbox>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="title">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header>Title</mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> <p class="text-truncate font-weight-600">{{row.title}}</p></mat-cell>
+    </ng-container>
+
+    <!-- Type Column -->
+    <ng-container cdkColumnDef="type">
+        <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-md mat-sort-header>Type</mat-header-cell>
+        <mat-cell *cdkCellDef="let row" fxHide fxShow.gt-md> {{row.type}}</mat-cell>
+    </ng-container>
+
+    <!-- Owner Column -->
+    <ng-container cdkColumnDef="is_gated">
+        <mat-header-cell *cdkHeaderCellDef fxHide.xs mat-sort-header>Is Gated</mat-header-cell>
+        <mat-cell *cdkCellDef="let row" fxHide.xs> {{row.isGated}}</mat-cell>
+    </ng-container>
+
+
+
+
+
+    <!-- Duration Column -->    
+
+    <ng-container cdkColumnDef="duration">
+        <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-md mat-sort-header>Duration</mat-header-cell>
+        <mat-cell *cdkCellDef="let row" fxHide fxShow.gt-md>{{row.duration}}</mat-cell>
+    </ng-container>
+
+
+    <!-- Publish Column -->
+    <ng-container cdkColumnDef="is_published">
+        <mat-header-cell *cdkHeaderCellDef fxHide.xs>Published</mat-header-cell>
+        <mat-cell *cdkCellDef="let row" fxHide.xs>
+
+<button mat-raised-button (click)="onChangetoggle($event,row._id);" class="save-button mat-accent" [disabled]="row.publish" aria-label="SAVE">publish</button>
+
+        </mat-cell>
+    </ng-container>
+	
+	 <!-- Buttons Column -->
+    <ng-container cdkColumnDef="buttons">
+        <mat-header-cell *cdkHeaderCellDef></mat-header-cell>
+        <mat-cell *cdkCellDef="let row">
+            <div fxFlex="row" fxLayoutAlign="end center">
+                             
+              <button mat-icon-button  aria-label="Toggle star" class="togglestar">
+                                 <mat-icon class="amber-fg">star</mat-icon>
+                                
+                             </button>
+                <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                        (click)="$event.stopPropagation();">
+                    <mat-icon class="secondary-text">more_vert</mat-icon>
+                </button>
+
+                <mat-menu #moreMenu="matMenu">
+                    <button mat-menu-item aria-label="remove" (click)="deleteFile(row)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Remove</span>
+                    </button>
+                </mat-menu>
+            </div>
+
+        </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *cdkRowDef="let row; columns: displayedColumns;"
+             (click)="onSelect(row)"
+             [ngClass]="{'mat-accent-50-bg':row == selected}"
+             matRipple [@animate]="{value:'*',params:{y:'100%'}}"
+    >
+    </mat-row>
+</mat-table>
+
+
+<mat-paginator #paginator
+                           [length]="dataSource.filteredData.length"
+                           [pageIndex]="0"
+                           [pageSize]="10"
+                           [pageSizeOptions]="[5, 10, 25, 100]">
+            </mat-paginator>
+</div>
+</div>
+</div>
