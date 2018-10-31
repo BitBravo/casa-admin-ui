@@ -49,16 +49,13 @@ export class FileData{
         this.cardImage = fileData.cardImage||'image';
         this.html = fileData.html;
         this.uploaded_files = fileData.uploaded_files||[];
-        this.is_cta_button =fileData.is_cta_button||false;
-        this.cta_display=fileData.cta_display||'Casa';
-        this.is_cta_url=fileData.is_cta_url||false;
-        this.cta_url=fileData.cta_url||'www.casa.com';
         this.cardColumn =fileData.cardColumn||false;
         this.cta = fileData.cta ? fileData.cta : [{
             cta_order: '0',
-            cta_display: 'LEARN MORE',
+            cta_display: 'Casa',
             cta_url: 'www.casa.com',
-            is_cta_url: true,
+            is_cta_url: false,
+            is_cta_button: false,
           }];
 }
 

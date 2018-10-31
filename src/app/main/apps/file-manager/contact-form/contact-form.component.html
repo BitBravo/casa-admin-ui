@@ -164,47 +164,20 @@
                                 <input   placeholder="CTA" matInput formControlName="cta_display">
                             </mat-form-field>
                         </p>
+
+                        <div class="example-selected-value" font-weight="">
+                            How you want the CTA styled
+                            <mat-radio-group class="example-radio-group" formControlName="is_cta_button" >
+                              <p><mat-radio-button class="example-radio-button" [value]="true" [checked]="true === is_cta_button">
+                                Button</mat-radio-button></p>
+                                <p><mat-radio-button class="example-radio-button" [value]="false" [checked]="false === is_cta_button">
+                                Download &nbsp;&nbsp;&nbsp;</mat-radio-button></p>
+                            </mat-radio-group>
+                        </div>
                     </div>
                 </mat-tab>
         </mat-tab-group>
     </div>
-       
-       <!-- <p class="example-selected-value" font-weight="">
-        Will you link to a file or URL?
-        <mat-radio-group class="example-radio-group" formControlName="is_cta_url" (change)="resourceTypeChanged($event)">
-            <p><mat-radio-button class="example-radio-button" [value]="true" [checked]="true === is_cta_url">
-            Url</mat-radio-button></p>
-            <p><mat-radio-button class="example-radio-button" [value]="false" [checked]="false === is_cta_url">
-            File</mat-radio-button></p>
-        </mat-radio-group>
-       </p>
-        <mat-form-field *ngIf="resourceType" class="w-100-p" >
-            <mat-icon matPrefix class="mr-12 s-20 secondary-text">&nbsp;&nbsp;link   </mat-icon>
-            <input name="url" formControlName="cta_url" placeholder="URL" matInput>
-        </mat-form-field>
-        
-        <section *ngIf="!resourceType">  
-            <ngx-uploadcare-widget
-              images-only="false"
-              multiple="true"
-              public-key="09ade3ff30785bdbeb04"
-              (on-upload-complete)="onUpload($event)"
-              (on-progress)="onProgress($event)"
-               >
-            </ngx-uploadcare-widget>
-        -->
-         <!--    <input hidden type="file" (change)="multipleFileChanged($event)" multiple #multipleFileInput/>
-            <button mat-icon-button matTooltip="Attach a file" id="multiple" (click)="multipleFileInput.click()">
-                <mat-icon>insert_photo</mat-icon>
-            </button> -->
-        <!-- </section> -->
-
-        <!-- <p class="example-selected-value" font-weight="">
-            CTA Text:
-            <mat-form-field>
-                 <input   placeholder="CTA" matInput formControlName="cta_display">
-            </mat-form-field>
-        </p>       -->
   
       <div  class="attachment" fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let multiple of multipleFile">
                     <div>
@@ -216,17 +189,6 @@
                         <mat-icon class="s-16" (click)="deleteMultipleFile(multiple)">close</mat-icon>
                     </button>
                 </div>
-
-    <div class="example-selected-value" font-weight="">
-        How you want the CTA styled
-        <mat-radio-group class="example-radio-group" formControlName="is_cta_button" >
-          <p><mat-radio-button class="example-radio-button" [value]="true" [checked]="true === is_cta_button">
-            Button</mat-radio-button></p>
-            <p><mat-radio-button class="example-radio-button" [value]="false" [checked]="false === is_cta_button">
-            Download &nbsp;&nbsp;&nbsp;</mat-radio-button></p>
-        </mat-radio-group>
- </div>
-
 
  <div *ngIf="uploadFile!=null" class="attachment" fxLayout="row" fxLayoutAlign="space-between center">
     <div>
