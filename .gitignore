@@ -40,5 +40,3 @@ testem.log
 Thumbs.db
 debug.log
 
-#env files
-src/environments/*
