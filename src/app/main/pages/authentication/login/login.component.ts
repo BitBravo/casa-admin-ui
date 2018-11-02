@@ -8,9 +8,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
 import {Router} from '@angular/router';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Response } from "@angular/http";
+import { Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 
@@ -26,10 +26,10 @@ export class LoginComponent implements OnInit, OnDestroy
 {
     loginForm: FormGroup;
     loginFormErrors: any;
-    isLoginError : boolean = false;
-    loginError:any;
-    isLoggedIn:boolean = false;
-    ;
+    isLoginError = false;
+    loginError: any;
+    isLoggedIn = false;
+    
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -43,12 +43,12 @@ export class LoginComponent implements OnInit, OnDestroy
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
-        private router:Router,
-        private Service:FuseAuthService,
+        private router: Router,
+        private Service: FuseAuthService,
         private http: HttpClient
     )
     {
-        let ldata = JSON.parse(localStorage.getItem('currentUser')); 
+        const ldata = JSON.parse(localStorage.getItem('currentUser')); 
        
         
 
@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit, OnDestroy
         this._unsubscribeAll = new Subject(); 
 
         if (ldata) {
-            if(ldata.token!= ""){
+            if (ldata.token !== ''){
                 this.isLoggedIn = true;
                 this.getRoute(ldata.userInfo    );
             } else {
@@ -86,8 +86,8 @@ export class LoginComponent implements OnInit, OnDestroy
     {
 
 
-        let ldata = JSON.parse(localStorage.getItem('currentUser')); 
-       if(!ldata){
+        const ldata = JSON.parse(localStorage.getItem('currentUser')); 
+       if (!ldata){
         this._fuseConfigService.config = {
             layout: {
                 navbar : {
@@ -126,12 +126,14 @@ export class LoginComponent implements OnInit, OnDestroy
     }
 
     getRoute(userInfo) {
-        if (userInfo && userInfo.role =='super_admin'){
+        if (userInfo && userInfo.role === 'super_admin'){
             this.router.navigate(['apps/dashboard']);
-        } else if (userInfo && userInfo.role == 'admin'){
-             let path = (this.router.url).split("/")[2];
-             if (!path) path = 'external'
-            this.router.navigate(['apps/'+path+ '/'+'file-manager']);
+        } else if (userInfo && userInfo.role === 'admin'){
+             let path = (this.router.url).split('/')[2];
+            //  if (!path) path = 'external'
+            if (!path) { path = 'resources/external'; }
+            // this.router.navigate(['apps/'+path+ '/'+'file-manager']);
+            this.router.navigate(['apps/' + path]);
         } else {
           return false;
         }
@@ -149,22 +151,23 @@ export class LoginComponent implements OnInit, OnDestroy
      { 
         localStorage.removeItem('currentUser');
 
-        this.Service.login(value.email,value.password) 
+        this.Service.login(value.email, value.password) 
         .subscribe(
             data => { 
-                let ldata = localStorage.getItem('currentUser');
-                let resultData : any ={};
+                const ldata = localStorage.getItem('currentUser');
+                let resultData: any = {};
                 
                 resultData = data;
 
-                if (resultData.status == 200 ) {
+                if (resultData.status === 200 ) {
                     this.isLoggedIn = true;
                     this.getRoute(resultData.userInfo); }
-                else    
-                    this.loginError = "Invalid username or password";
+                else {    
+                    this.loginError = 'Invalid username or password';
+                }
             },
             error => { 
-                this.loginError = "Invalid username or password";                   
+                this.loginError = 'Invalid username or password';                   
             }
         );
            
