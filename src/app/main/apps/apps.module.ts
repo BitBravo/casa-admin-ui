@@ -58,6 +58,12 @@ const routes = [
     loadChildren: './loginlogs/roles.module#RolesModule'
 },
 
+
+{
+    path        : 'report',
+    loadChildren: './report/report.module#ReportModule'
+},
+
 {
     path        : 'dashboard',
     loadChildren: './dashboard/analytics/analytics.module#AnalyticsDashboardModule'

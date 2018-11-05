@@ -39,7 +39,6 @@ export class ContactsContactFormDialogComponent implements OnInit {
   };
   value: string = '';
   attachmentUrl: any = [];
-  resourceType: boolean = false;
   register: string;
   checking: boolean = false;
   exactSize: any = "";
@@ -55,8 +54,6 @@ export class ContactsContactFormDialogComponent implements OnInit {
   selectedValue: string;
   chooseOption: string;
   hasDetails: boolean = true;
-  // is_cta_url: boolean;
-  is_cta_button;
   isGated: any;
   publish: any;
   userRoles: any;
@@ -76,9 +73,10 @@ export class ContactsContactFormDialogComponent implements OnInit {
   add_default_image: boolean = true;
   cta: any[] = [{
     cta_order: '0',
-    cta_display: 'LEARN MORE',
+    cta_display: 'Casa',
     cta_url: 'www.casa.com',
-    is_cta_url: true,
+    is_cta_url: false,
+    is_cta_button: false
   }];
   selected = new FormControl(0);
   selectAfterAdding: boolean = false;
@@ -175,10 +173,6 @@ export class ContactsContactFormDialogComponent implements OnInit {
       hasDetails: [this.fileManagerData.hasDetails],
       cardImage: [this.fileManagerData.cardImage],
       html: [this.fileManagerData.html],
-      is_cta_button: [this.fileManagerData.is_cta_button],
-      // cta_display: [this.fileManagerData.cta_display],
-      // cta_url: [this.fileManagerData.cta_url],
-      // is_cta_url: [this.fileManagerData.is_cta_url],
       cardColumn: [this.fileManagerData.cardColumn],
       update_files: [this.fileManagerData.uploaded_files],
       cta: new FormArray(this.fileManagerData.cta.map((cta) => this.createCtaFormGroup(cta)))
@@ -190,7 +184,8 @@ export class ContactsContactFormDialogComponent implements OnInit {
         cta_url: new FormControl(singleCta.cta_url),
         is_cta_url: new FormControl(singleCta.is_cta_url),
         cta_display: new FormControl(singleCta.cta_display),
-        cta_order: new FormControl(singleCta.cta_order)
+        cta_order: new FormControl(singleCta.cta_order),
+        is_cta_button: new FormControl(singleCta.is_cta_button)
       }));
   }
 
@@ -198,9 +193,10 @@ export class ContactsContactFormDialogComponent implements OnInit {
     const controlArray = <FormArray> this.fileDataGroup.get('cta');
     const newCTA = {
       cta_order: controlArray.controls.length,
-      cta_display: 'LEARN MORE',
+      cta_display: 'Casa',
       cta_url: 'www.casa.com',
-      is_cta_url: true,
+      is_cta_url: false,
+      is_cta_button: false,
     };
     return this.createCtaFormGroup(newCTA);
   }
@@ -308,7 +304,6 @@ export class ContactsContactFormDialogComponent implements OnInit {
     fd.append('publish', d.value.publish);
     fd.append('url', d.value.url);
     fd.append('duration', d.value.duration);
-    fd.append('is_cta_button', d.value.is_cta_button);
     fd.append('cardImage', this.cardImage);
     fd.append('cardColumn', d.value.cardColumn);
     fd.append('default_image', `${this.add_default_image}`);
@@ -375,7 +370,6 @@ export class ContactsContactFormDialogComponent implements OnInit {
     fd.append('publish', d.value.publish);
     fd.append('url', d.value.url);
     fd.append('duration', d.value.duration);
-    fd.append('is_cta_button', d.value.is_cta_button);
     fd.append('cardImage', this.cardImage);
     fd.append('cardColumn', d.value.cardColumn);
     /*
@@ -422,14 +416,12 @@ export class ContactsContactFormDialogComponent implements OnInit {
   resourceTypeChanged(event, id) {
     const controlArray = <FormArray> this.fileDataGroup.get('cta');
     controlArray.controls[id].get('is_cta_url').setValue(event.value);
-    // this.resourceType = event.value;
   }
 
   ngOnInit() {
     if (this.content) {
       this.fileManagerData = this.content;
       this.uploaded_files = this.content.uploaded_files;
-      this.resourceType = this.content.is_cta_url
       this.checking = true;
       this.hasDetails = true;
     } else {
