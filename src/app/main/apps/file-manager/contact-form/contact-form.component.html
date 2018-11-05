@@ -120,14 +120,14 @@
         <button mat-raised-button class="example-add-tab-button" (click)="addTab(true)">
             Add CTA
         </button>
-        <button mat-raised-button class="example-delete-tab-button" [disabled]="getCTAs(fileDataGroup).length === 1" (click)="removeTab(index)">
+        <!-- <button mat-raised-button class="example-delete-tab-button" [disabled]="getCTAs(fileDataGroup).length === 1" (click)="removeTab(index)">
             Remove CTA
-        </button>
+        </button> -->
     </div>
 
     <div formArrayName="cta">
         <mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
-                <mat-tab *ngFor="let tab of fileDataGroup.controls.cta.controls; let i = index" label="Tab {{i+1}}">
+                <mat-tab *ngFor="let tab of fileDataGroup['controls']['cta']['controls']; let i = index" label="Tab {{i+1}}">
                     <div [formGroupName]="i">
                         <p class="example-selected-value" font-weight="">
                             Will you link to a file or URL?
