@@ -3,12 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-	production: true,
-	hmr       : false,
- 	apiUrl:'https://api.casa-dev.crts.io/api',
- 	// apiUrl:'http://localhost:5000/api',
+    production: true,
+    hmr: false,
+    // apiUrl:'https://api.casa-dev.crts.io/api',
+    apiUrl: 'http://localhost:5000/api',
 
-}
+};
 /*
  * In development mode, to ignore zone related error stack frames such as
  * `zone.run`, `zoneDelegate.invokeTask` for easier debugging, you can

@@ -1,0 +1,137 @@
+<div
+    id="report"
+    class="page-layout simple right-sidebar inner-sidebar inner-scroll"
+>
+
+    <!-- HEADER -->
+    <div
+        class="header mat-accent-bg p-16 p-sm-24"
+        fxLayout="column"
+        fxLayoutAlign="start start"
+        fxLayout.gt-xs="row"
+        fxLayoutAlign.gt-xs="space-between center"
+    >
+
+        <!-- APP TITLE -->
+        <div
+            fxLayout="row"
+            fxLayoutAlign="start center"
+        >
+
+            <button
+                mat-icon-button
+                class="sidebar-toggle mr-12"
+                fxHide.gt-md
+                (click)="toggleSidebar('report-main-sidebar')"
+            >
+                <mat-icon>menu</mat-icon>
+            </button>
+
+            <div
+                class="logo"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+            >
+                <mat-icon
+                    class="logo-icon mr-16"
+                    [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}"
+                >
+                    import_contacts
+                </mat-icon>
+                <span
+                    class="logo-text h1"
+                    [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}"
+                >
+                    Report
+                </span>
+            </div>
+
+        </div>
+        <!-- / APP TITLE -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CENTER -->
+    <div
+        class="center"
+        fxFlex
+    >
+
+        <!-- CONTENT -->
+        <div
+            class="content mat-white-bg"
+            fusePerfectScrollbar
+        >
+            <div class="content p-24">
+                <div class="report-viewer-wrapper mat-white-bg mat-elevation-z2">
+                    <div class="report-viewer-header">
+                        <div class="report-viewer-title">Pick a Report</div>
+                    </div>
+                    <div class="report-viewer-source">
+                        <div class="tab-content"></div>
+                    </div>
+                    <div class="report-viewer-body">
+                        <mat-selection-list [(ngModel)]="selectedOptions">
+                            <mat-list-option *ngFor="let option of options" [value]="option">{{option}}</mat-list-option>
+                        </mat-selection-list>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content p-24">
+                <div class="report-viewer-wrapper mat-white-bg mat-elevation-z2">
+                    <div class="report-viewer-header">
+                        <div class="report-viewer-title">Pick a Date Range</div>
+                    </div>
+                    <div class="report-viewer-source">
+                        <div class="tab-content"></div>
+                    </div>
+                    <div class="report-viewer-body">
+                        <mat-form-field>
+                            <input
+                                matInput
+                                [matDatepicker]="start"
+                                placeholder="Choose a start date"
+                                [(ngModel)]="startDate"
+                            >
+                            <mat-datepicker-toggle
+                                matSuffix
+                                [for]="start"
+                            ></mat-datepicker-toggle>
+                            <mat-datepicker #start ngDefaultControl></mat-datepicker>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input
+                                matInput
+                                [matDatepicker]="end"
+                                placeholder="Choose a end date"
+                                [(ngModel)]="endDate"
+                            >
+                            <mat-datepicker-toggle
+                                matSuffix
+                                [for]="end"
+                            ></mat-datepicker-toggle>
+                            <mat-datepicker #end ngDefaultControl></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="content p-24">
+                <button
+                    class="mat-accent add-todo-button w-15-p mat-raised-button float-right"
+                    (click)="generate()"
+                    [disabled] = "!selectedOptions.length > 0"
+                    mat-button
+                >
+                    Generate the Report
+                </button>
+            </div>
+        </div>
+        <!-- / CONTENT -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>
