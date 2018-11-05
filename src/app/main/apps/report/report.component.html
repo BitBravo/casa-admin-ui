@@ -18,14 +18,14 @@
             fxLayoutAlign="start center"
         >
 
-            <button
+            <!-- <button
                 mat-icon-button
                 class="sidebar-toggle mr-12"
                 fxHide.gt-md
                 (click)="toggleSidebar('report-main-sidebar')"
             >
                 <mat-icon>menu</mat-icon>
-            </button>
+            </button> -->
 
             <div
                 class="logo"
@@ -122,7 +122,7 @@
                 <button
                     class="mat-accent add-todo-button w-15-p mat-raised-button float-right"
                     (click)="generate()"
-                    [disabled] = "!selectedOptions.length > 0"
+                    [disabled] = "!(selectedOptions.length > 0)"
                     mat-button
                 >
                     Generate the Report
