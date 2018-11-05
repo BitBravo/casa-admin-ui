@@ -7,7 +7,6 @@ export const environment = {
     hmr: false,
     apiUrl: 'https://api.casa-dev.crts.io/api',
     // apiUrl: 'http://localhost:5000/api',
-
 };
 /*
  * In development mode, to ignore zone related error stack frames such as
