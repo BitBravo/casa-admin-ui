@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseUtils } from '@fuse/utils';
 import { Router } from '@angular/router';
+
 declare var jQuery: any;
 @Component({
   selector: 'contacts-contact-form-dialog',
@@ -21,7 +22,8 @@ export class ContactsContactFormDialogComponent implements OnInit {
   @Input("content") content;
   @Output() nameEvent = new EventEmitter<string>();
   config = {
-
+    allowedContent: true,
+    extraPlugins: 'sourcedialog',
     toolbar: [
       { name: 'document', groups: ['mode', 'document', 'doctools'], items: ['Source'] },
       { name: 'clipboard', groups: ['clipboard', 'undo'], items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'] },
