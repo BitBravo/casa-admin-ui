@@ -45,7 +45,7 @@
         <div class="mb-24" fxLayout="row" fxLayoutAlign="start start" *ngIf="origin=='external'">
             <mat-form-field fxFlex class="w-100-p">
                 <mat-icon matPrefix class="mr-12 s-20 secondary-text">link&nbsp;&nbsp;  </mat-icon>
-                <input name="url" formControlName="url" placeholder="URL" matInput [required]="origin!='native' " >
+                <input name="url" formControlName="url" [placeholder]="origin === 'external' ? 'External Url' : 'URL'" matInput [required]="origin!='native' && !hasDetails " >
             </mat-form-field>
 
         </div>
