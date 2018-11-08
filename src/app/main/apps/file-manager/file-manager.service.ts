@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot,Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { map } from 'rxjs/operators';
@@ -21,16 +21,16 @@ export class FileManagerService implements Resolve<any>
     file: FileData;
     selectedFiles: string[] = [];
     origin: string;
-    
+
     searchText: string;
-  ldata: any = JSON.parse(localStorage.getItem('currentUser'));
+    ldata: any = JSON.parse(localStorage.getItem('currentUser'));
     httpOptions = {
-       headers: new HttpHeaders({
-                          'Content-Type':  'application/json',
-                          'Authorization': "Bearer "+this.ldata.token
-         })
-       };
-  
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': "Bearer " + this.ldata.token
+        })
+    };
+
     /**
      * Constructor
      *
@@ -38,9 +38,8 @@ export class FileManagerService implements Resolve<any>
      */
     constructor(
         private _httpClient: HttpClient,
-        private router:Router
-    )
-    {
+        private router: Router
+    ) {
 
         // Set the defaults
         this.onFilesChanged = new BehaviorSubject({});
@@ -62,8 +61,7 @@ export class FileManagerService implements Resolve<any>
      * @param {RouterStateSnapshot} state
      * @returns {Observable<any> | Promise<any> | any}
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
-    {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
 
         return new Promise((resolve, reject) => {
 
@@ -84,35 +82,33 @@ export class FileManagerService implements Resolve<any>
      *
      * @returns {Promise<any>}
      */
-    getFiles(): Promise<any>
-    { 
+    getFiles(): Promise<any> {
         this.ldata = JSON.parse(localStorage.getItem('currentUser'));
         this.httpOptions = {
             headers: new HttpHeaders({
-                       'Content-Type':  'application/json',
-                       'Authorization': "Bearer "+this.ldata.token
-              })
-            };
-         
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + this.ldata.token
+            })
+        };
+
 
         return new Promise((resolve, reject) => {
 
-            this._httpClient.get(`${environment.apiUrl}/resource/`+this.origin,this.httpOptions)
+            this._httpClient.get(`${environment.apiUrl}/resource/` + this.origin, this.httpOptions)
                 .subscribe((response: any) => {
                     this.files = response.data;
-//tocheck todo                    this.onFilesChanged.next(response);
-                        if ( this.searchText && this.searchText !== '' )
-                        {
-                            this.files = FuseUtils.filterArrayByString(this.files, this.searchText);
-                        }
-            			if (this.files)
-	                        this.files = this.files.map(file => {
-	                            return new FileData (file);
-	                        });
-                        this.onFilesChanged.next(this.files);
-                        resolve(this.files);
+                    //tocheck todo                    this.onFilesChanged.next(response);
+                    if (this.searchText && this.searchText !== '') {
+                        this.files = FuseUtils.filterArrayByString(this.files, this.searchText);
+                    }
+                    if (this.files)
+                        this.files = this.files.map(file => {
+                            return new FileData(file);
+                        });
+                    this.onFilesChanged.next(this.files);
+                    resolve(this.files);
                 }, reject);
-            }
+        }
         );
     }
     /**
@@ -120,14 +116,11 @@ export class FileManagerService implements Resolve<any>
      *
      * @param id
      */
-    toggleSelectedFile(id): void
-    {
+    toggleSelectedFile(id): void {
         // First, check if we already have that files as selected...
-        if ( this.selectedFiles.length > 0 )
-        {
+        if (this.selectedFiles.length > 0) {
             const index = this.selectedFiles.indexOf(id);
-            if ( index !== -1 )
-            {
+            if (index !== -1) {
                 this.selectedFiles.splice(index, 1);
                 // Trigger the next event
                 this.onSelectedFilesChanged.next(this.selectedFiles);
@@ -143,14 +136,11 @@ export class FileManagerService implements Resolve<any>
     /**
      * Toggle select all
      */
-    toggleSelectAll(): void
-    {
-        if ( this.selectedFiles.length > 0 )
-        {
+    toggleSelectAll(): void {
+        if (this.selectedFiles.length > 0) {
             this.deselectFiles();
         }
-        else
-        {
+        else {
             this.selectFiles();
         }
     }
@@ -160,16 +150,14 @@ export class FileManagerService implements Resolve<any>
      * @param filterParameter
      * @param filterValue
      */
-    selectFiles(filterParameter?, filterValue?): void
-    {
+    selectFiles(filterParameter?, filterValue?): void {
         this.selectedFiles = [];
         // If there is no filter, select all roles
-        if ( filterParameter === undefined || filterValue === undefined )
-        {
+        if (filterParameter === undefined || filterValue === undefined) {
             this.selectedFiles = [];
             this.files.map(file => {
                 this.selectedFiles.push(file._id);
-        });
+            });
         }
 
         // Trigger the next event
@@ -178,8 +166,7 @@ export class FileManagerService implements Resolve<any>
     /**
      * Deselect 
      */
-    deselectFiles(): void
-    {
+    deselectFiles(): void {
         this.selectedFiles = [];
 
         // Trigger the next event
@@ -191,36 +178,34 @@ export class FileManagerService implements Resolve<any>
      *
      * @param role
      */
-     deleteFile(file)
-     {  
-     	this.ldata= JSON.parse(localStorage.getItem('currentUser'));
-     	this.httpOptions = {
-    	   headers: new HttpHeaders({
-              'Content-Type':  'application/json',
-              'Authorization': "Bearer "+this.ldata.token
-     	 })};
-        const fileIndex = this.files.indexOf(file);
-        this.files.splice(fileIndex, 1);
-        this.onFilesChanged.next(this.files);
-        return this._httpClient.delete<any>(`${environment.apiUrl}/resource/`+file._id,this.httpOptions);
-    }
-
-    
-
- /**
-     * Delete selected roles
-     */
-    deleteSelectedFiles()
-    {
+    deleteFile(file) {
         this.ldata = JSON.parse(localStorage.getItem('currentUser'));
         this.httpOptions = {
             headers: new HttpHeaders({
-                       'Content-Type':  'application/json',
-                       'Authorization': "Bearer "+this.ldata.token
-              })
-            };
-        for ( const fileId of this.selectedFiles )
-        {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + this.ldata.token
+            })
+        };
+        const fileIndex = this.files.indexOf(file);
+        this.files.splice(fileIndex, 1);
+        this.onFilesChanged.next(this.files);
+        return this._httpClient.delete<any>(`${environment.apiUrl}/resource/` + file._id, this.httpOptions);
+    }
+
+
+
+    /**
+        * Delete selected roles
+        */
+    deleteSelectedFiles() {
+        this.ldata = JSON.parse(localStorage.getItem('currentUser'));
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + this.ldata.token
+            })
+        };
+        for (const fileId of this.selectedFiles) {
             const file = this.files.find(_file => {
                 return _file._id === fileId;
             });
@@ -229,81 +214,88 @@ export class FileManagerService implements Resolve<any>
         }
         this.onFilesChanged.next(this.files);
 
-        return  this._httpClient.post<any>(`${environment.apiUrl}/resource/delete`,
-                {'arr':this.selectedFiles},this.httpOptions).
-                    subscribe(response => {this.deselectFiles(); });
-    ;
-        
+        return this._httpClient.post<any>(`${environment.apiUrl}/resource/delete`,
+            { 'arr': this.selectedFiles }, this.httpOptions).
+            subscribe(response => { this.deselectFiles(); });
+        ;
+
 
     }
 
-    addFile(data){
-         this.ldata= JSON.parse(localStorage.getItem('currentUser'));
+    addFile(data) {
+        this.ldata = JSON.parse(localStorage.getItem('currentUser'));
         this.httpOptions = {
             headers: new HttpHeaders({
-                       'Authorization': "Bearer "+this.ldata.token
-              })
-            };
-     
-       return this._httpClient.post<any>(`${environment.apiUrl}/resource`,data,this.httpOptions);
+                'Authorization': "Bearer " + this.ldata.token
+            })
+        };
+
+        return this._httpClient.post<any>(`${environment.apiUrl}/resource`, data, this.httpOptions);
     }
 
 
 
-    editFile(data,id){ 
-    this.ldata= JSON.parse(localStorage.getItem('currentUser'));
-   this.httpOptions = {
-       headers: new HttpHeaders({
-                  'Authorization': "Bearer "+this.ldata.token,
-         })
-       };
-       return this._httpClient.put<any>(`${environment.apiUrl}/resource/`+id,data,this.httpOptions);
+    editFile(data, id) {
+        this.ldata = JSON.parse(localStorage.getItem('currentUser'));
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Authorization': "Bearer " + this.ldata.token,
+            })
+        };
+        return this._httpClient.put<any>(`${environment.apiUrl}/resource/` + id, data, this.httpOptions);
     }
 
 
-    getAudience()
-    {
-         this.ldata= JSON.parse(localStorage.getItem('currentUser'));
-                        this.httpOptions = {
-                                    headers: new HttpHeaders({
-                                        'Authorization': "Bearer "+this.ldata.token,})};
-                         return this._httpClient.get<any>(`${environment.apiUrl}/audience/`,this.httpOptions);}
-    
-    getTopics(){
-         this.ldata= JSON.parse(localStorage.getItem('currentUser'));
-            this.httpOptions = {
-                       headers: new HttpHeaders({
-                          'Authorization': "Bearer "+this.ldata.token,})};
-                return this._httpClient.get<any>(`${environment.apiUrl}/topic/`,this.httpOptions);}
-    
-    getType(){
-            this.ldata= JSON.parse(localStorage.getItem('currentUser'));
-            this.httpOptions = {
-                           headers: new HttpHeaders({
-                              'Authorization': "Bearer "+this.ldata.token,})};
-                return this._httpClient.get<any>(`${environment.apiUrl}/type/`,this.httpOptions);}
-     
+    getAudience() {
+        this.ldata = JSON.parse(localStorage.getItem('currentUser'));
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Authorization': "Bearer " + this.ldata.token,
+            })
+        };
+        return this._httpClient.get<any>(`${environment.apiUrl}/audience/`, this.httpOptions);
+    }
 
-addNewResourceFlag(flag)
-{
-    return flag?true:false;
+    getTopics() {
+        this.ldata = JSON.parse(localStorage.getItem('currentUser'));
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Authorization': "Bearer " + this.ldata.token,
+            })
+        };
+        return this._httpClient.get<any>(`${environment.apiUrl}/topic/`, this.httpOptions);
+    }
+
+    getType() {
+        this.ldata = JSON.parse(localStorage.getItem('currentUser'));
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Authorization': "Bearer " + this.ldata.token,
+            })
+        };
+        return this._httpClient.get<any>(`${environment.apiUrl}/type/`, this.httpOptions);
+    }
+
+
+    addNewResourceFlag(flag) {
+        return flag ? true : false;
+    }
+
+    getDeleteEditFile(url) {
+        this.ldata = JSON.parse(localStorage.getItem('currentUser'));
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Accept': 'application/vnd.uploadcare-v0.5+json',
+                'Authorization': 'Uploadcare.Simple 09ade3ff30785bdbeb04:c389646cdbfd85db498f'
+
+            })
+        };
+        return this._httpClient.delete<any>(
+            `https://api.uploadcare.com/files/${url}/`,
+            this.httpOptions);
+
+
+    }
+
+
 }
-
-getDeleteEditFile(url)
-{
-     this.ldata= JSON.parse(localStorage.getItem('currentUser'));
-            this.httpOptions = {
-                           headers: new HttpHeaders({
-                            'Accept': 'application/vnd.uploadcare-v0.5+json',
-                            'Authorization': 'Uploadcare.Simple 09ade3ff30785bdbeb04:c389646cdbfd85db498f'
-                         
-                          })};
-                return this._httpClient.delete<any>(
-                    `https://api.uploadcare.com/files/${url}/`,
-                    this.httpOptions);
-     
-
-}
-    
-     
-    }

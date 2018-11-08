@@ -1,234 +1,544 @@
-<div  class="p-24 m-0" fusePerfectScrollbar>
+<div
+    class="p-24 m-0"
+    fusePerfectScrollbar
+>
     <p class="text-center mat-headline red-400-bg">{{errorMessage}}</p>
     <form [formGroup]="fileDataGroup">
-        <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
+        <div
+            class="mb-24"
+            fxLayout="row"
+            fxLayoutAlign="start start"
+        >
             <mat-form-field fxFlex>
-                <mat-icon matPrefix class="mr-12 s-20 secondary-text">info  </mat-icon>
-                <input name="title" formControlName="title" placeholder="Title" matInput required>
+                <mat-icon
+                    matPrefix
+                    class="mr-12 s-20 secondary-text"
+                >
+                    info
+                </mat-icon>
+                <input
+                    name="title"
+                    formControlName="title"
+                    placeholder="Title"
+                    matInput
+                    required
+                >
             </mat-form-field>
         </div>
 
+        <div
+            class="mb-24"
+            fxLayout="row"
+            fxLayoutAlign="start start"
+        >
+            <mat-form-field fxFlex>
+                <mat-icon
+                    matPrefix
+                    class="mr-12 s-20 secondary-text"
+                >
+                    description
+                </mat-icon>
+                <input
+                    name="ogDescription"
+                    formControlName="ogDescription"
+                    placeholder="OG Description"
+                    matInput
+                >
+            </mat-form-field>
+        </div>
 
-        <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
-<mat-form-field class="w-45-p">
-                <mat-select placeholder="Type" formControlName="type"  required>
-                    <mat-option *ngFor="let type of  dynamicType" [value]="type.name">
+        <div
+            class="mb-24"
+            fxLayout="row"
+            fxLayoutAlign="start start"
+        >
+            <mat-form-field class="w-45-p">
+                <mat-select
+                    placeholder="Type"
+                    formControlName="type"
+                    required
+                >
+                    <mat-option
+                        *ngFor="let type of  dynamicType"
+                        [value]="type.name"
+                    >
                         {{type.name}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
             <div class="w-10-p"></div>
-            
+
             <mat-form-field class="w-45-p">
-                <mat-select placeholder="Topics" name="topics" formControlName="topics" multiple>
-                   <mat-option *ngFor="let topics of dynamicTopics" [value]="topics.name">{{topics.name}}</mat-option>
+                <mat-select
+                    placeholder="Topics"
+                    name="topics"
+                    formControlName="topics"
+                    multiple
+                >
+                    <mat-option
+                        *ngFor="let topics of dynamicTopics"
+                        [value]="topics.name"
+                    >
+                        {{topics.name}}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
 
-        <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
+        <div
+            class="mb-24"
+            fxLayout="row"
+            fxLayoutAlign="start start"
+        >
             <mat-form-field class="w-45-p">
-                <mat-select placeholder="Audience" name="audience" formControlName="audience" multiple>
-                    <mat-option *ngFor="let aud of dynamicAudience" [value]="aud.name">{{aud.name}}</mat-option>
+                <mat-select
+                    placeholder="Audience"
+                    name="audience"
+                    formControlName="audience"
+                    multiple
+                >
+                    <mat-option
+                        *ngFor="let aud of dynamicAudience"
+                        [value]="aud.name"
+                    >
+                        {{aud.name}}
+                    </mat-option>
                 </mat-select>
 
             </mat-form-field>
             <div class="w-10-p"></div>
-            <mat-form-field *ngIf="userRoles" class="w-45-p">
-                <mat-select placeholder="Roles" name="role" formControlName="role" multiple>
-                    <mat-option *ngFor="let role of userRoles" [value]="role.name">{{role.name}}</mat-option>
+            <mat-form-field
+                *ngIf="userRoles"
+                class="w-45-p"
+            >
+                <mat-select
+                    placeholder="Roles"
+                    name="role"
+                    formControlName="role"
+                    multiple
+                >
+                    <mat-option
+                        *ngFor="let role of userRoles"
+                        [value]="role.name"
+                    >
+                        {{role.name}}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
 
-
-        <div class="mb-24" fxLayout="row" fxLayoutAlign="start start" *ngIf="origin=='external'">
-            <mat-form-field fxFlex class="w-100-p">
-                <mat-icon matPrefix class="mr-12 s-20 secondary-text">link&nbsp;&nbsp;  </mat-icon>
-                <input name="url" formControlName="url" placeholder="URL" matInput [required]="origin!='native' " >
+        <div
+            class="mb-24"
+            fxLayout="row"
+            fxLayoutAlign="start start"
+            *ngIf="origin=='external'"
+        >
+            <mat-form-field
+                fxFlex
+                class="w-100-p"
+            >
+                <mat-icon
+                    matPrefix
+                    class="mr-12 s-20 secondary-text"
+                >
+                    link
+                </mat-icon>
+                <input
+                    name="url"
+                    formControlName="url"
+                    [placeholder]="origin === 'external' ? 'External Url' : 'URL'"
+                    matInput
+                    [required]="origin!='native' && !hasDetails"
+                >
             </mat-form-field>
 
         </div>
 
+        <div
+            class="mb-24"
+            fxLayout="row"
+            fxLayoutAlign="start start"
+        >
+            <mat-form-field
+                fxFlex
+                class="w-100-p"
+            >
+                <mat-icon
+                    matPrefix
+                    class="mr-12 s-20 secondary-text"
+                >
+                    switch_video
+                </mat-icon>
+                <input
+                    name="duration"
+                    formControlName="duration"
+                    placeholder="duration"
+                    matInput
+                    required
+                >
+            </mat-form-field>
 
-        <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
-          <mat-form-field fxFlex class="w-100-p">
-            <mat-icon matPrefix class="mr-12 s-20 secondary-text">switch_video  </mat-icon>
-            <input name="duration" formControlName="duration" placeholder="duration" matInput required>
-        </mat-form-field>
+        </div>
 
-    </div>
+        <div
+            class="example-selected-value"
+            font-weight
+        >
 
-    <div class="example-selected-value" font-weight="">
+        </div>
+        <p
+            class="example-selected-value"
+            font-weight
+        >
+            Is this resource gated?
+            <mat-slide-toggle
+                checked="isGated"
+                formControlName="isGated"
+            ></mat-slide-toggle>
+        </p>
 
-    </div>
-    <section class="example-selected-value" font-weight="">
-        Is this resource gated?&nbsp;
-        <mat-slide-toggle checked="isGated" formControlName="isGated"></mat-slide-toggle>
-	</section>
-    <p class="example-selected-value" font-weight="">
-        Does this resource have detail page?
-        <mat-slide-toggle  checked="hasDetails" formControlName="hasDetails" (change)="radioChanged($event)">
-        </mat-slide-toggle>
-    </p>
-    <p *ngIf="hasDetails">
-        <ck-editor name="editor1" formControlName="html" skin="moono-lisa" language="en" [config]="config">
-       </ck-editor>
-    </p>
+        <p
+            class="example-selected-value"
+            font-weight
+        >
+            Is this resource password protected?
+            <mat-slide-toggle
+                checked="isProtected"
+                formControlName="isProtected"
+            ></mat-slide-toggle>
+        </p>
 
-    <section  class="example-selected-value " font-weight="">
-      <p><strong>Card Image</strong> 
-        &nbsp;&nbsp;
-        <ngx-uploadcare-widget
-          images-only="false"
-          multiple="false"
-          public-key="09ade3ff30785bdbeb04"
-          image-shrink="310x221"
-          (on-upload-complete)="onUploadCardImage($event)"
-          (on-progress)="progressCardImage($event)"
-          clearable="true"  
-          
-           >
-        </ngx-uploadcare-widget>
-          </p>
+        <p *ngIf="fileDataGroup.controls.isProtected.value">
+            <mat-form-field>
+                <input
+                    matInput
+                    name="password"
+                    type="password"
+                    class="w-100-p"
+                    placeholder="New password"
+                    formControlName="password"
+                    required
+                >
+                <mat-error *ngIf="fileDataGroup.hasError('required', 'password')">Please enter your new password</mat-error>
+            </mat-form-field>
+        </p>
+        <p *ngIf="fileDataGroup.controls.isProtected.value">
+            <mat-form-field>
+                <input
+                    matInput
+                    name="confirmPassword"
+                    type="password"
+                    placeholder="Confirm password"
+                    formControlName="confirmPassword"
+                    required
+                >
+                <mat-error *ngIf="fileDataGroup.hasError('notSame')">Passwords do not match</mat-error>
+            </mat-form-field>
+        </p>
+
+        <p
+            class="example-selected-value"
+            font-weight
+        >
+            Does this resource have detail page?
+            <mat-slide-toggle
+                checked="hasDetails"
+                formControlName="hasDetails"
+                (change)="radioChanged($event)"
+            >
+            </mat-slide-toggle>
+        </p>
+        <p *ngIf="hasDetails">
+            <ck-editor
+                name="editor1"
+                formControlName="html"
+                skin="moono-lisa"
+                language="en"
+                [config]="config"
+            >
+            </ck-editor>
+        </p>
+
+        <section
+            class="example-selected-value"
+            font-weight
+        >
+            <p>
+                <strong>Card Image</strong>  
+
+                <ngx-uploadcare-widget
+                    images-only="false"
+                    multiple="false"
+                    public-key="09ade3ff30785bdbeb04"
+                    image-shrink="310x221"
+                    (on-upload-complete)="onUploadCardImage($event)"
+                    (on-progress)="progressCardImage($event)"
+                    clearable="true"
+                >
+                </ngx-uploadcare-widget>
+            </p>
         </section>
 
+        <div
+            class="p-16"
+            *ngIf="!checking && newcardimage"
+        >
+            <img
+                src="{{newcardimage}}"
+                class="img"
+                #cardImageSource
+            >
+            <mat-icon
+                class="mat-icon material-icon pointer"
+                (click)="removeImage(newcardimage)"
+            >
+                close
+            </mat-icon>
+        </div>
 
-        <div class="p-16" *ngIf="!checking && newcardimage">
-           <img src="{{newcardimage}}" class="img" #cardImageSource>
-           <mat-icon class="mat-icon material-icon pointer" (click)="removeImage(newcardimage)">close</mat-icon>
-       </div>
+        <div
+            class="p-16"
+            *ngIf="checking && fileManagerData.cardImage && removeFlag"
+        >
+            <img
+                src="{{fileManagerData.cardImage}}"
+                class="img"
+                #cardImageSource
+            >
+            <mat-icon
+                class="mat-icon material-icon"
+                (click)="removeImage(fileManagerData.cardImage)"
+            >
+                close
+            </mat-icon>
+        </div>
 
-        <div class="p-16" *ngIf="checking && fileManagerData.cardImage && removeFlag">
-           <img src="{{fileManagerData.cardImage}}" class="img" #cardImageSource>
-           <mat-icon class="mat-icon material-icon" (click)="removeImage(fileManagerData.cardImage)">close</mat-icon>
-       </div>
-
-       <section class="example-selected-value" font-weight="">
+        <section
+            class="example-selected-value"
+            font-weight
+        >
             Does this resource have two column card?
-             <mat-slide-toggle formControlName="cardColumn" checked="cardColumn">                
-             </mat-slide-toggle>  
+            <mat-slide-toggle
+                formControlName="cardColumn"
+                checked="cardColumn"
+            >
+            </mat-slide-toggle>
             <!-- <mat-radio-group class="example-radio-group" formControlName="cardColumn">
                 <mat-radio-button class="example-radio-button" [value]="true" [checked]="true === cardColumn"></mat-radio-button>
-            </mat-radio-group>
-             -->
-       </section>
+            </mat-radio-group> -->
+        </section>
 
-    <br />
-    <br />
-    <div>
-        <button mat-raised-button class="example-add-tab-button" (click)="addTab(true)">
-            Add CTA
-        </button>
-        <!-- <button mat-raised-button class="example-delete-tab-button" [disabled]="getCTAs(fileDataGroup).length === 1" (click)="removeTab(index)">
+        <br>
+        <br>
+        <div>
+            <button
+                mat-raised-button
+                class="example-add-tab-button"
+                (click)="addTab(true)"
+            >
+                Add CTA
+            </button>
+            <!-- <button mat-raised-button class="example-delete-tab-button" [disabled]="getCTAs(fileDataGroup).length === 1" (click)="removeTab(index)">
             Remove CTA
         </button> -->
-    </div>
+        </div>
 
-    <div formArrayName="cta">
-        <mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
-                <mat-tab *ngFor="let tab of fileDataGroup['controls']['cta']['controls']; let i = index" label="Tab {{i+1}}">
+        <div formArrayName="cta">
+            <mat-tab-group
+                [selectedIndex]="selected.value"
+                (selectedIndexChange)="selected.setValue($event)"
+            >
+                <mat-tab
+                    *ngFor="let tab of fileDataGroup['controls']['cta']['controls']; let i = index"
+                    label="Tab {{i+1}}"
+                >
                     <div [formGroupName]="i">
-                        <p class="example-selected-value" font-weight="">
+                        <p
+                            class="example-selected-value"
+                            font-weight
+                        >
                             Will you link to a file or URL?
-                            <mat-radio-group class="example-radio-group" formControlName="is_cta_url" (change)="resourceTypeChanged($event, i)">
+                            <mat-radio-group
+                                class="example-radio-group"
+                                formControlName="is_cta_url"
+                                (change)="resourceTypeChanged($event, i)"
+                            >
                                 <p>
-                                    <mat-radio-button class="example-radio-button" [value]="true" [checked]="true === is_cta_url">
-                                        Url</mat-radio-button>
+                                    <mat-radio-button
+                                        class="example-radio-button"
+                                        [value]="true"
+                                        [checked]="true === is_cta_url"
+                                    >
+                                        Url
+                                    </mat-radio-button>
                                 </p>
                                 <p>
-                                    <mat-radio-button class="example-radio-button" [value]="false" [checked]="false === is_cta_url">
-                                        File</mat-radio-button>
+                                    <mat-radio-button
+                                        class="example-radio-button"
+                                        [value]="false"
+                                        [checked]="false === is_cta_url"
+                                    >
+                                        File
+                                    </mat-radio-button>
                                 </p>
                             </mat-radio-group>
                         </p>
-                        <mat-form-field *ngIf="fileDataGroup.controls.cta.value[i].is_cta_url" class="w-100-p">
-                            <mat-icon matPrefix class="mr-12 s-20 secondary-text">&nbsp;&nbsp;link </mat-icon>
-                            <input name="url" formControlName="cta_url" placeholder="URL" matInput>
+                        <mat-form-field
+                            *ngIf="fileDataGroup.controls.cta.value[i].is_cta_url"
+                            class="w-100-p"
+                        >
+                            <mat-icon
+                                matPrefix
+                                class="mr-12 s-20 secondary-text"
+                            >
+                                link
+                            </mat-icon>
+                            <input
+                                name="url"
+                                formControlName="cta_url"
+                                placeholder="URL"
+                                matInput
+                            >
                         </mat-form-field>
 
-                        <section *ngIf="!fileDataGroup.controls.cta.value[i].is_cta_url">  
+                        <section *ngIf="!fileDataGroup.controls.cta.value[i].is_cta_url">
                             <ngx-uploadcare-widget
                                 images-only="false"
                                 multiple="true"
                                 public-key="09ade3ff30785bdbeb04"
                                 (on-upload-complete)="onUpload($event)"
                                 (on-progress)="onProgress($event)"
-                                >
+                            >
                             </ngx-uploadcare-widget>
                         </section>
 
-                        <p class="example-selected-value" font-weight="">
+                        <p
+                            class="example-selected-value"
+                            font-weight
+                        >
                             CTA Text:
                             <mat-form-field>
-                                <input   placeholder="CTA" matInput formControlName="cta_display">
+                                <input
+                                    placeholder="CTA"
+                                    matInput
+                                    formControlName="cta_display"
+                                >
                             </mat-form-field>
                         </p>
 
-                        <div class="example-selected-value" font-weight="">
+                        <div
+                            class="example-selected-value"
+                            font-weight
+                        >
                             How you want the CTA styled
-                            <mat-radio-group class="example-radio-group" formControlName="is_cta_button" >
-                              <p><mat-radio-button class="example-radio-button" [value]="true" [checked]="true === is_cta_button">
-                                Button</mat-radio-button></p>
-                                <p><mat-radio-button class="example-radio-button" [value]="false" [checked]="false === is_cta_button">
-                                Download &nbsp;&nbsp;&nbsp;</mat-radio-button></p>
+                            <mat-radio-group
+                                class="example-radio-group"
+                                formControlName="is_cta_button"
+                            >
+                                <p>
+                                    <mat-radio-button
+                                        class="example-radio-button"
+                                        [value]="true"
+                                        [checked]="true === is_cta_button"
+                                    >
+                                        Button
+                                    </mat-radio-button>
+                                </p>
+                                <p>
+                                    <mat-radio-button
+                                        class="example-radio-button"
+                                        [value]="false"
+                                        [checked]="false === is_cta_button"
+                                    >
+                                        Download
+                                    </mat-radio-button>
+                                </p>
                             </mat-radio-group>
                         </div>
                     </div>
                 </mat-tab>
-        </mat-tab-group>
-    </div>
-  
-      <div  class="attachment" fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let multiple of multipleFile">
-                    <div>
-                        <span class="filename">{{multiple.name}}</span>
-                        <span class="size">({{multiple.size}})</span>
-                    </div>
+            </mat-tab-group>
+        </div>
 
-                    <button mat-icon-button aria-label="Delete attachment">
-                        <mat-icon class="s-16" (click)="deleteMultipleFile(multiple)">close</mat-icon>
-                    </button>
-                </div>
+        <div
+            class="attachment"
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
+            *ngFor="let multiple of multipleFile"
+        >
+            <div>
+                <span class="filename">{{multiple.name}}</span>
+                <span class="size">({{multiple.size}})</span>
+            </div>
 
- <div *ngIf="uploadFile!=null" class="attachment" fxLayout="row" fxLayoutAlign="space-between center">
+            <button
+                mat-icon-button
+                aria-label="Delete attachment"
+            >
+                <mat-icon
+                    class="s-16"
+                    (click)="deleteMultipleFile(multiple)"
+                >
+                    close
+                </mat-icon>
+            </button>
+        </div>
+
+        <div
+            *ngIf="uploadFile!=null"
+            class="attachment"
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
+        >
+            <div>
+                <span class="filename">{{uploadFile.name}}</span>
+                <span class="size">({{exactSize}})</span>
+            </div>
+
+            <button
+                mat-icon-button
+                aria-label="Delete attachment"
+            >
+                <mat-icon
+                    class="s-16"
+                    (click)="deleteFile()"
+                >
+                    close
+                </mat-icon>
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+<div
+    class="m-0 p-16"
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+>
     <div>
-        <span class="filename">{{uploadFile.name}}</span>
-        <span class="size">({{exactSize}})</span>
+        <button
+            *ngIf="!checking"
+            mat-raised-button
+            (click)="save(fileDataGroup)"
+            class="save-button mat-accent"
+            [disabled]="fileDataGroup.invalid"
+            aria-label="SAVE"
+        >
+            SAVE
+        </button>
+
+        <button
+            *ngIf="checking"
+            mat-raised-button
+            (click)="update(fileDataGroup, fileManagerData._id)"
+            class="save-button mat-accent"
+            [disabled]="fileDataGroup.invalid||progressBoolean"
+            aria-label="SAVE"
+        >
+            SAVE
+        </button>
+
     </div>
-
-    <button mat-icon-button aria-label="Delete attachment">
-        <mat-icon class="s-16" (click)="deleteFile()">close</mat-icon>
-    </button>
 </div>
-
-</form>
-
-</div>
-
-
-
-<div  class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
- <div>
-    <button *ngIf="!checking"
-    mat-raised-button
-    (click)="save(fileDataGroup)"
-    class="save-button mat-accent"
-    [disabled]="fileDataGroup.invalid"
-    aria-label="SAVE">
-    SAVE
-</button>
-
-
-
-<button *ngIf="checking"
-mat-raised-button
-(click)="update(fileDataGroup, fileManagerData._id)"
-class="save-button mat-accent"
-[disabled]="fileDataGroup.invalid||progressBoolean"
-aria-label="SAVE">
-SAVE
-</button>
-
-</div>
-</div>
-
