@@ -31,6 +31,27 @@
             fxLayout="row"
             fxLayoutAlign="start start"
         >
+            <mat-form-field fxFlex>
+                <mat-icon
+                    matPrefix
+                    class="mr-12 s-20 secondary-text"
+                >
+                    description
+                </mat-icon>
+                <input
+                    name="ogDescription"
+                    formControlName="ogDescription"
+                    placeholder="OG Description"
+                    matInput
+                >
+            </mat-form-field>
+        </div>
+
+        <div
+            class="mb-24"
+            fxLayout="row"
+            fxLayoutAlign="start start"
+        >
             <mat-form-field class="w-45-p">
                 <mat-select
                     placeholder="Type"
@@ -125,9 +146,9 @@
                 <input
                     name="url"
                     formControlName="url"
-                    placeholder="URL"
+                    [placeholder]="origin === 'external' ? 'External Url' : 'URL'"
                     matInput
-                    [required]="origin!='native'"
+                    [required]="origin!='native' && !hasDetails"
                 >
             </mat-form-field>
 
@@ -186,7 +207,7 @@
                 formControlName="isProtected"
             ></mat-slide-toggle>
         </p>
-        
+
         <p *ngIf="fileDataGroup.controls.isProtected.value">
             <mat-form-field>
                 <input
@@ -201,7 +222,7 @@
                 <mat-error *ngIf="fileDataGroup.hasError('required', 'password')">Please enter your new password</mat-error>
             </mat-form-field>
         </p>
-        <p  *ngIf="fileDataGroup.controls.isProtected.value">
+        <p *ngIf="fileDataGroup.controls.isProtected.value">
             <mat-form-field>
                 <input
                     matInput

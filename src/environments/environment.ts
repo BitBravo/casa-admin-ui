@@ -5,9 +5,8 @@
 export const environment = {
     production: true,
     hmr: false,
-    // apiUrl:'https://api.casa-dev.crts.io/api',
-    apiUrl: 'http://localhost:5000/api',
-
+    apiUrl: 'https://api.casa-dev.crts.io/api',
+    // apiUrl: 'http://localhost:5000/api',
 };
 /*
  * In development mode, to ignore zone related error stack frames such as
@@ -16,3 +15,4 @@ export const environment = {
  * because it will have performance impact when throw error
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
