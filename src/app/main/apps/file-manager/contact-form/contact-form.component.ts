@@ -1,9 +1,9 @@
 import { Component, Inject, ViewEncapsulation, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validator, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validator, Validators, FormArray, FormGroupDirective, NgForm } from '@angular/forms';
 import { FileData } from 'app/main/apps/file-manager/file-manager.model';
 import { FileManagerService } from 'app/main/apps/file-manager/file-manager.service';
 import { RolesService } from 'app/main/apps/roles/roles.service';
-import { MatButtonModule, MatDividerModule, MatFormFieldModule, MatIconModule, MatOptionModule, MatSelectModule, MatSlideToggleModule } from '@angular/material';
+import { MatButtonModule, MatDividerModule, MatFormFieldModule, MatIconModule, MatOptionModule, MatSelectModule, MatSlideToggleModule, ErrorStateMatcher } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseUtils } from '@fuse/utils';
@@ -17,9 +17,9 @@ declare var jQuery: any;
 })
 
 export class ContactsContactFormDialogComponent implements OnInit {
-  @ViewChild("cardImageSource") cardImageSource;
-  @Input("content") content;
-  @Output() nameEvent = new EventEmitter<string>();
+  @ViewChild('cardImageSource') cardImageSource;
+  @Input('content') content;
+  @Output() nameEvent = new EventEmitter<String>();
   config = {
 
     toolbar: [
@@ -37,24 +37,27 @@ export class ContactsContactFormDialogComponent implements OnInit {
       { name: 'about', items: [''] }
     ]
   };
-  value: string = '';
+  value: String = '';
   attachmentUrl: any = [];
-  register: string;
-  checking: boolean = false;
-  exactSize: any = "";
-  html: any = "";
-  action: string | 'edit';
+  register: String;
+  checking: Boolean = false;
+  exactSize: any = '';
+  html: any = '';
+  action: String | 'edit';
   fileManagerData: FileData;
   fileDataGroup: FormGroup;
   contactForm: FormGroup;
-  origin: string | 'external';
-  dialogTitle: string;
+  origin: String | 'external';
+  dialogTitle: String;
   uploadFile: File = null;
   disabled = true;
-  selectedValue: string;
-  chooseOption: string;
-  hasDetails: boolean = true;
+  selectedValue: String;
+  chooseOption: String;
+  hasDetails: Boolean = true;
   isGated: any;
+  isProtected: Boolean = false;
+  password: String;
+  confirmPassword: String;
   publish: any;
   userRoles: any;
   dynamicTopics: any;
@@ -62,15 +65,15 @@ export class ContactsContactFormDialogComponent implements OnInit {
   dynamicType: any;
   multipleFile: any;
   uploaded_files: any[];
-  errorMessage: any = "";
-  progressBoolean: boolean = false;
-  cardImage: string = "";
-  edit: boolean = false;
-  isMultiple: boolean = false;
+  errorMessage: any = '';
+  progressBoolean: Boolean = false;
+  cardImage: String = '';
+  edit: Boolean = false;
+  isMultiple: Boolean = false;
   removeFlag = true;
-  newcardimage: string;
-  default_image: boolean;
-  add_default_image: boolean = true;
+  newcardimage: String;
+  default_image: Boolean;
+  add_default_image: Boolean = true;
   cta: any[] = [{
     cta_order: '0',
     cta_display: 'Casa',
@@ -79,7 +82,9 @@ export class ContactsContactFormDialogComponent implements OnInit {
     is_cta_button: false
   }];
   selected = new FormControl(0);
-  selectAfterAdding: boolean = false;
+  selectAfterAdding: Boolean = false;
+
+
   /**
    * Constructor
    *
@@ -120,20 +125,20 @@ export class ContactsContactFormDialogComponent implements OnInit {
 
     if (!this.dynamicAudience) {
       fileManagerService.getAudience().subscribe((response) => {
-        this.dynamicAudience = response["data"];
+        this.dynamicAudience = response['data'];
       });
     }
 
     if (!this.dynamicType) {
       fileManagerService.getType().subscribe((response) => {
-        this.dynamicType = response["data"];
+        this.dynamicType = response['data'];
       });
     }
 
 
     if (!this.dynamicTopics) {
       fileManagerService.getTopics().subscribe((response) => {
-        this.dynamicTopics = response["data"];
+        this.dynamicTopics = response['data'];
       });
     }
 
@@ -170,27 +175,38 @@ export class ContactsContactFormDialogComponent implements OnInit {
       role: [this.fileManagerData.role],
       myFile: [this.fileManagerData.myFile],
       isGated: [this.fileManagerData.isGated],
+      isProtected: [this.fileManagerData.isProtected],
+      password: [this.fileManagerData.password],
+      confirmPassword: [this.fileManagerData.confirmPassword],
       hasDetails: [this.fileManagerData.hasDetails],
       cardImage: [this.fileManagerData.cardImage],
       html: [this.fileManagerData.html],
       cardColumn: [this.fileManagerData.cardColumn],
       update_files: [this.fileManagerData.uploaded_files],
       cta: new FormArray(this.fileManagerData.cta.map((cta) => this.createCtaFormGroup(cta)))
-    });
+    }, {validator: this.checkPasswords });
   }
 
   createCtaFormGroup(singleCta: any): FormGroup {
-      return (new FormGroup({
-        cta_url: new FormControl(singleCta.cta_url),
-        is_cta_url: new FormControl(singleCta.is_cta_url),
-        cta_display: new FormControl(singleCta.cta_display),
-        cta_order: new FormControl(singleCta.cta_order),
-        is_cta_button: new FormControl(singleCta.is_cta_button)
-      }));
+    return (new FormGroup({
+      cta_url: new FormControl(singleCta.cta_url),
+      is_cta_url: new FormControl(singleCta.is_cta_url),
+      cta_display: new FormControl(singleCta.cta_display),
+      cta_order: new FormControl(singleCta.cta_order),
+      is_cta_button: new FormControl(singleCta.is_cta_button)
+    }));
+  }
+
+  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+    console.log('this.matcher');
+    const pass = group.controls.password.value;
+    const confirmPass = group.controls.confirmPassword.value;
+    const isProtected = group.controls.isProtected.value;
+    return !isProtected || pass === confirmPass ? null : { notSame: true };   
   }
 
   initCTA(): FormGroup {
-    const controlArray = <FormArray> this.fileDataGroup.get('cta');
+    const controlArray = <FormArray>this.fileDataGroup.get('cta');
     const newCTA = {
       cta_order: controlArray.controls.length,
       cta_display: 'Casa',
@@ -205,7 +221,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
     return form.controls.cta.controls;
   }
 
-  addTab(selectAfterAdding: boolean) {
+  addTab(selectAfterAdding: Boolean) {
     const control = <FormArray>this.fileDataGroup.get('cta');
     control.push(this.initCTA());
 
@@ -220,14 +236,14 @@ export class ContactsContactFormDialogComponent implements OnInit {
   }
 
   onUploadCardImage(event) {
-    if (this.cardImageSource != undefined) {
-      let url = this.cardImageSource["nativeElement"]["src"];
-      this.fileManagerService.getDeleteEditFile(url.split("/")[3]).subscribe((response) => {
-        console.log("Data removed Successfully");
+    if (this.cardImageSource !== undefined) {
+      const url = this.cardImageSource['nativeElement']['src'];
+      this.fileManagerService.getDeleteEditFile(url.split('/')[3]).subscribe((response) => {
+        console.log('Data removed Successfully');
       });
     }
-    this.cardImage = event["cdnUrl"];
-    this.newcardimage = event["cdnUrl"];
+    this.cardImage = event['cdnUrl'];
+    this.newcardimage = event['cdnUrl'];
     this.default_image = false;
     this.add_default_image = false;
     this.edit = true;
@@ -240,10 +256,11 @@ export class ContactsContactFormDialogComponent implements OnInit {
 
   onUpload(info) {
     this.isMultiple = true;
-    let url = info["cdnUrl"].split("~");
-    let total = url[1];
+    const url = info['cdnUrl'].split('~');
+    const total = url[1];
+    // tslint:disable-next-line:radix
     for (let i = 0; i < parseInt(total.charAt(0)); i++) {
-      this.attachmentUrl.push(info["cdnUrl"] + `nth/${i}/`);
+      this.attachmentUrl.push(info['cdnUrl'] + `nth/${i}/`);
     }
     this.progressBoolean = false;
   }
@@ -254,9 +271,9 @@ export class ContactsContactFormDialogComponent implements OnInit {
 
   fileChanged(e) {
     this.uploadFile = e.target.files[0];
-    var _size = this.uploadFile.size;
-    var fSExt = new Array('Bytes', 'KB', 'MB', 'GB'),
-      i = 0;
+    let _size = this.uploadFile.size;
+    const fSExt = new Array('Bytes', 'KB', 'MB', 'GB');
+    let i = 0;
     while (_size > 900) { _size /= 1024; i++; }
     this.exactSize = (Math.round(_size * 100) / 100) + ' ' + fSExt[i];
   }
@@ -272,33 +289,36 @@ export class ContactsContactFormDialogComponent implements OnInit {
   }
 
   removeChip(chip) { return true; }
-  
+
   // for submittig into services of the fileUploads
   save(d) {
 
-    let fd = new FormData();
+    const fd = new FormData();
 
 
     fd.append('title', d.value.title);
-    fd.append("type", d.value.type);
+    fd.append('type', d.value.type);
     fd.append('origin', this.fileManagerService.origin);
-    for (var i = 0; i < this.attachmentUrl.length; i++) {
-      fd.append("uploaded_files[]", this.attachmentUrl[i]);
+    for (let i = 0; i < this.attachmentUrl.length; i++) {
+      fd.append('uploaded_files[]', this.attachmentUrl[i]);
     }
 
-    for (var i = 0; i < d.value.audience.length; i++) {
-      fd.append("audience[]", d.value.audience[i]);
+    for (let i = 0; i < d.value.audience.length; i++) {
+      fd.append('audience[]', d.value.audience[i]);
     }
-    for (var i = 0; i < d.value.topics.length; i++) {
+    for (let i = 0; i < d.value.topics.length; i++) {
       fd.append('topics[]', d.value.topics[i]);
     }
-    for (var i = 0; i < d.value.role.length; i++) {
-      fd.append("role[]", d.value.role[i]);
+    for (let i = 0; i < d.value.role.length; i++) {
+      fd.append('role[]', d.value.role[i]);
     }
 
     fd.append('cta', JSON.stringify(d.value.cta));
 
     fd.append('isGated', d.value.isGated);
+    fd.append('isProtected', d.value.isProtected);
+    fd.append('password', d.value.password);
+    fd.append('confirmPassword', d.value.confirmPassword);
     fd.append('hasDetails', d.value.hasDetails);
     fd.append('html', d.value.html);
     fd.append('publish', d.value.publish);
@@ -315,7 +335,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
               this.nameEvent.emit('true');
               this.router.navigate(['/apps/resources/' + this.fileManagerService.origin]);
             }
-          )
+          );
         },
         err => {
 
@@ -332,39 +352,44 @@ export class ContactsContactFormDialogComponent implements OnInit {
     this.default_image = true;
     this.newcardimage = undefined;
     this.add_default_image = true;
-    //this.removeCardImage(cardImage);
+    // this.removeCardImage(cardImage);
 
   }
 
 
 
-  //for submittig into services of the fileUploads
+  // for submittig into services of the fileUploads
   update(d, id) {
 
-    if (!this.isMultiple && d.value.update_files.length > 0)
+    if (!this.isMultiple && d.value.update_files.length > 0) {
       this.attachmentUrl.push(d.value.update_files[0]['url']);
-    if (!this.edit)
-      this.cardImage = this.cardImageSource["nativeElement"]["src"];
+    }
+    if (!this.edit) {
+      this.cardImage = this.cardImageSource['nativeElement']['src'];
+    }
 
-    let fd = new FormData();
-    fd.append("uploaded_files[]", this.attachmentUrl);
+    const fd = new FormData();
+    fd.append('uploaded_files[]', this.attachmentUrl);
     fd.append('title', d.value.title);
     fd.append('default_image', `${this.default_image}`);
-    fd.append("type", d.value.type);
+    fd.append('type', d.value.type);
     fd.append('origin', d.value.origin);
-    for (var i = 0; i < d.value.audience.length; i++) {
-      fd.append("audience[]", d.value.audience[i]);
+    for (let i = 0; i < d.value.audience.length; i++) {
+      fd.append('audience[]', d.value.audience[i]);
     }
-    for (var i = 0; i < d.value.topics.length; i++) {
-      fd.append("topics[]", d.value.topics[i]);
+    for (let i = 0; i < d.value.topics.length; i++) {
+      fd.append('topics[]', d.value.topics[i]);
     }
-    for (var i = 0; i < d.value.role.length; i++) {
-      fd.append("role[]", d.value.role[i]);
+    for (let i = 0; i < d.value.role.length; i++) {
+      fd.append('role[]', d.value.role[i]);
     }
 
     fd.append('cta', JSON.stringify(d.value.cta));
 
     fd.append('isGated', d.value.isGated);
+    fd.append('isProtected', d.value.isProtected);
+    fd.append('password', d.value.password);
+    fd.append('confirmPassword', d.value.confirmPassword);
     fd.append('hasDetails', d.value.hasDetails);
     fd.append('html', d.value.html);
     fd.append('publish', d.value.publish);
@@ -383,17 +408,17 @@ export class ContactsContactFormDialogComponent implements OnInit {
             this.nameEvent.emit('true');
             this.router.navigate(['/apps/resources/' + this.fileManagerService.origin]);
           }
-        )
+        );
       },
         err => {
 
 
-          var notify = jQuery.notify({
-            title: "<strong>Success</strong><br>",
-            message: "Account successfully created ",
+          const notify = jQuery.notify({
+            title: '<strong>Success</strong><br>',
+            message: 'Account successfully created ',
           },
             {
-              type: "info",
+              type: 'info',
               delay: 6000
             }
           );
@@ -414,7 +439,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
 
 
   resourceTypeChanged(event, id) {
-    const controlArray = <FormArray> this.fileDataGroup.get('cta');
+    const controlArray = <FormArray>this.fileDataGroup.get('cta');
     controlArray.controls[id].get('is_cta_url').setValue(event.value);
   }
 
@@ -429,9 +454,20 @@ export class ContactsContactFormDialogComponent implements OnInit {
       this.fileManagerData = new FileData({});
     }
     this.fileDataGroup = this.createFileForm();
-
+    this.fileDataGroup.valueChanges.subscribe(() => {
+      if (this.fileDataGroup.hasError('notSame')) {
+        this.fileDataGroup.controls.confirmPassword.setErrors({'incorrect': true});
+      } else {
+        this.fileDataGroup.controls.confirmPassword.setErrors(null);
+      }
+    });
+    this.fileDataGroup.controls.isProtected.valueChanges.subscribe(() => {
+      if (!this.fileDataGroup.controls.isProtected.value) {
+        this.fileDataGroup.controls.password.setValue('');
+        this.fileDataGroup.controls.confirmPassword.setValue('');
+        this.fileDataGroup.controls.password.setErrors(null);
+        this.fileDataGroup.controls.confirmPassword.setErrors(null);
+      }
+    });
   }
-
-
-
 }
