@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseUtils } from '@fuse/utils';
 import { Router } from '@angular/router';
+
 declare var jQuery: any;
 @Component({
   selector: 'contacts-contact-form-dialog',
@@ -21,7 +22,8 @@ export class ContactsContactFormDialogComponent implements OnInit {
   @Input('content') content;
   @Output() nameEvent = new EventEmitter<String>();
   config = {
-
+    allowedContent: true,
+    extraPlugins: 'sourcedialog',
     toolbar: [
       { name: 'document', groups: ['mode', 'document', 'doctools'], items: ['Source'] },
       { name: 'clipboard', groups: ['clipboard', 'undo'], items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'] },
@@ -83,8 +85,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
   }];
   selected = new FormControl(0);
   selectAfterAdding: Boolean = false;
-
-
+  ogDescription: string;
   /**
    * Constructor
    *
@@ -183,7 +184,8 @@ export class ContactsContactFormDialogComponent implements OnInit {
       html: [this.fileManagerData.html],
       cardColumn: [this.fileManagerData.cardColumn],
       update_files: [this.fileManagerData.uploaded_files],
-      cta: new FormArray(this.fileManagerData.cta.map((cta) => this.createCtaFormGroup(cta)))
+      cta: new FormArray(this.fileManagerData.cta.map((cta) => this.createCtaFormGroup(cta))),
+      ogDescription: [this.fileManagerData.ogDescription]
     }, {validator: this.checkPasswords });
   }
 
@@ -314,6 +316,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
     }
 
     fd.append('cta', JSON.stringify(d.value.cta));
+    fd.append('ogDescription', d.value.ogDescription);
 
     fd.append('isGated', d.value.isGated);
     fd.append('isProtected', d.value.isProtected);
@@ -385,6 +388,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
     }
 
     fd.append('cta', JSON.stringify(d.value.cta));
+    fd.append('ogDescription', d.value.ogDescription);
 
     fd.append('isGated', d.value.isGated);
     fd.append('isProtected', d.value.isProtected);

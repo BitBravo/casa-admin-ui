@@ -32,6 +32,7 @@ export class FileData {
     cta_url: string;
     cardColumn: boolean;
     cta: [Object];
+    ogDescription: string;
     constructor(fileData) {
 
         this._id = fileData._id || '';
@@ -61,10 +62,9 @@ export class FileData {
             cta_url: 'www.casa.com',
             is_cta_url: false,
             is_cta_button: false,
-        }];
-    }
-
-    // audience
+          }];
+        this.ogDescription = fileData.ogDescription || '';
+}
 
     addTag(event: MatChipInputEvent): void {
         const input = event.input;
