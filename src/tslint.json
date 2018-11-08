@@ -10,6 +10,7 @@
             ],
             "camelCase"
         ],
+        "typedef": false,
         "component-selector": [
             true,
             "element",
