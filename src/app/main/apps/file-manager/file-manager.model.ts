@@ -29,6 +29,7 @@ export class FileData{
     cta_url:string;
     cardColumn:boolean;
     cta: [Object];
+    ogDescription: string;
         constructor(fileData)
     {    
         
@@ -57,6 +58,7 @@ export class FileData{
             is_cta_url: false,
             is_cta_button: false,
           }];
+        this.ogDescription = fileData.ogDescription || "";
 }
 
 // audience
