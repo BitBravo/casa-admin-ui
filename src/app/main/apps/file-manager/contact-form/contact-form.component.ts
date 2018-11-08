@@ -82,6 +82,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
   }];
   selected = new FormControl(0);
   selectAfterAdding: boolean = false;
+  ogDescription: string;
   /**
    * Constructor
    *
@@ -177,7 +178,8 @@ export class ContactsContactFormDialogComponent implements OnInit {
       html: [this.fileManagerData.html],
       cardColumn: [this.fileManagerData.cardColumn],
       update_files: [this.fileManagerData.uploaded_files],
-      cta: new FormArray(this.fileManagerData.cta.map((cta) => this.createCtaFormGroup(cta)))
+      cta: new FormArray(this.fileManagerData.cta.map((cta) => this.createCtaFormGroup(cta))),
+      ogDescription: [this.fileManagerData.ogDescription]
     });
   }
 
@@ -299,6 +301,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
     }
 
     fd.append('cta', JSON.stringify(d.value.cta));
+    fd.append('ogDescription', d.value.ogDescription);
 
     fd.append('isGated', d.value.isGated);
     fd.append('hasDetails', d.value.hasDetails);
@@ -365,6 +368,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
     }
 
     fd.append('cta', JSON.stringify(d.value.cta));
+    fd.append('ogDescription', d.value.ogDescription);
 
     fd.append('isGated', d.value.isGated);
     fd.append('hasDetails', d.value.hasDetails);
