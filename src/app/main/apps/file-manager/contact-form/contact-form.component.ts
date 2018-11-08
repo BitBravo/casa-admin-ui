@@ -20,7 +20,7 @@ declare var jQuery: any;
 export class ContactsContactFormDialogComponent implements OnInit {
   @ViewChild('cardImageSource') cardImageSource;
   @Input('content') content;
-  @Output() nameEvent = new EventEmitter<String>();
+  @Output() nameEvent = new EventEmitter<string>();
   config = {
     allowedContent: true,
     extraPlugins: 'sourcedialog',
@@ -39,27 +39,27 @@ export class ContactsContactFormDialogComponent implements OnInit {
       { name: 'about', items: [''] }
     ]
   };
-  value: String = '';
+  value = '';
   attachmentUrl: any = [];
-  register: String;
+  register: string;
   checking: Boolean = false;
   exactSize: any = '';
   html: any = '';
-  action: String | 'edit';
+  action: string | 'edit';
   fileManagerData: FileData;
   fileDataGroup: FormGroup;
   contactForm: FormGroup;
-  origin: String | 'external';
-  dialogTitle: String;
+  origin: string | 'external';
+  dialogTitle: string;
   uploadFile: File = null;
   disabled = true;
-  selectedValue: String;
-  chooseOption: String;
+  selectedValue: string;
+  chooseOption: string;
   hasDetails: Boolean = true;
   isGated: any;
   isProtected: Boolean = false;
-  password: String;
-  confirmPassword: String;
+  password: string;
+  confirmPassword: string;
   publish: any;
   userRoles: any;
   dynamicTopics: any;
@@ -69,11 +69,11 @@ export class ContactsContactFormDialogComponent implements OnInit {
   uploaded_files: any[];
   errorMessage: any = '';
   progressBoolean: Boolean = false;
-  cardImage: String = '';
+  cardImage = '';
   edit: Boolean = false;
   isMultiple: Boolean = false;
   removeFlag = true;
-  newcardimage: String;
+  newcardimage: string;
   default_image: Boolean;
   add_default_image: Boolean = true;
   cta: any[] = [{
