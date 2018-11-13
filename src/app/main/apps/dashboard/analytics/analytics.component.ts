@@ -94,11 +94,12 @@ export class AnalyticsDashboardComponent implements OnInit {
                         ],
                         yAxes: [
                             {
-                                display: false,
+                                display: true,
                                 ticks: {
                                     // min: 1.5,
                                     // max: 5,
-                                    stepSize: 0.001
+                                    // stepSize: 0.001
+                                    fontColor: '#ffffff'
                                 }
                             }
                         ]
@@ -108,7 +109,7 @@ export class AnalyticsDashboardComponent implements OnInit {
                             propagate: false
                         },
                         xLabelsOnTop: {
-                            active: true
+                            active: false
                         }
                     }
                 }
@@ -291,10 +292,10 @@ export class AnalyticsDashboardComponent implements OnInit {
                     if (!datasets[item._id.year]) {
                         datasets[item._id.year] = [{}];
                         datasets[item._id.year][0]['data'] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-                        datasets[item._id.year][0]['label'] = 'Sales';
+                        datasets[item._id.year][0]['label'] = 'Visitors';
                         datasets[item._id.year][0]['fill'] = 'start';
                     }
-                    datasets[item._id.year][0]['data'][item._id.month - 1] = item.counts / 1000;
+                    datasets[item._id.year][0]['data'][item._id.month - 1] = item.counts;
                 });
                 this.widgets.widget1.datasets = datasets;
                 this.widgetYears = Object.keys(this.widgets.widget1.datasets);
