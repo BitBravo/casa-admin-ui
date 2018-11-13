@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
@@ -8,14 +8,14 @@ import { environment } from '../../../../../environments/environment';
 export class AnalyticsDashboardService implements Resolve<any>
 {
     widgets: any[];
-    logins:any[];
-     ldata : any = JSON.parse(localStorage.getItem('currentUser'));
+    logins: any[];
+    ldata: any = JSON.parse(localStorage.getItem('currentUser'));
     httpOptions = {
-       headers: new HttpHeaders({
-                  'Content-Type':  'application/json',
-                  'Authorization': "Bearer "+this.ldata.token
-         })
-       };
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.ldata.token
+        })
+    };
 
     /**
      * Constructor
@@ -24,8 +24,7 @@ export class AnalyticsDashboardService implements Resolve<any>
      */
     constructor(
         private _httpClient: HttpClient
-    )
-    {
+    ) {
     }
 
     /**
@@ -35,8 +34,7 @@ export class AnalyticsDashboardService implements Resolve<any>
      * @param {RouterStateSnapshot} state
      * @returns {Observable<any> | Promise<any> | any}
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
-    {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
         return new Promise((resolve, reject) => {
 
             Promise.all([
@@ -56,8 +54,7 @@ export class AnalyticsDashboardService implements Resolve<any>
      *
      * @returns {Promise<any>}
      */
-    getWidgets(): Promise<any>
-    {
+    getWidgets(): Promise<any> {
         return new Promise((resolve, reject) => {
             this._httpClient.get('api/analytics-dashboard-widgets')
                 .subscribe((response: any) => {
@@ -68,24 +65,46 @@ export class AnalyticsDashboardService implements Resolve<any>
     }
 
 
-    loginLogs()
-    {
+    loginLogs() {
 
-   }
+    }
 
 
+
+
+    getVisitors(params) {
+        this.ldata = JSON.parse(localStorage.getItem('currentUser'));
+        const getHttpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.ldata.token
+            }),
+            params: params
+        };
+        return this._httpClient.get<any>(`${environment.apiUrl}/histories/visitors/monthly`, getHttpOptions);
+    }
     
+    getLogs(params) {
+        this.ldata = JSON.parse(localStorage.getItem('currentUser'));
+        const getHttpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.ldata.token
+            }),
+            params: params
+        };
+        return this._httpClient.get<any>(`${environment.apiUrl}/histories/daily`, getHttpOptions);
+    }
 
-   sendemail()
-   { 
+    sendemail() {
         this.ldata = JSON.parse(localStorage.getItem('currentUser'));
         this.httpOptions = {
-           headers: new HttpHeaders({
-                  'Content-Type':  'application/json',
-                  'Authorization': "Bearer "+this.ldata.token
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.ldata.token
             })
         };
-        return this._httpClient.get<any>(`${environment.apiUrl}/sendemail`,this.httpOptions);
-   }
+        return this._httpClient.get<any>(`${environment.apiUrl}/sendemail`, this.httpOptions);
+    }
 
 }
