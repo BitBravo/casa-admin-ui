@@ -52,6 +52,11 @@ const routes = [
     loadChildren: './featured/roles.module#RolesModule'
 },
 
+{
+    path        : 'position',
+    loadChildren: './position/position.module#PositionModule'
+},
+
 
 {
     path        : 'loginlog',
