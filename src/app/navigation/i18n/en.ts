@@ -25,7 +25,7 @@ export const locale = {
             'AUDIENCE': 'Audience',
             'TOPIC': 'Topic',
             'FEATURED': 'Featured',
-            'POSITION': 'Position',
+            'POSITION': 'Featured Resources',
             'DASHBOARD': 'Dashboard',
             'REDIRECTMANAGMENT': 'Redirect Management',
             'LOGINLOGS': 'Login Logs',
