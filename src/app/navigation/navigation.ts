@@ -100,6 +100,15 @@ export const navigation: FuseNavigation[] = [
                 url: '/apps/featured/'
             },
 
+            
+            {
+                id: 'position',
+                title: 'Position',
+                translate: 'NAV.POSITION',
+                type: 'item',
+                icon: 'import_contacts',
+                url: '/apps/position/'
+            },
 
             {
                 id: 'redirectmanagement',

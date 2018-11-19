@@ -1,0 +1,127 @@
+<div
+    id="position"
+    class="page-layout simple right-sidebar inner-sidebar inner-scroll"
+>
+
+    <!-- HEADER -->
+    <div
+        class="header mat-accent-bg p-16 p-sm-24"
+        fxLayout="column"
+        fxLayoutAlign="start start"
+        fxLayout.gt-xs="row"
+        fxLayoutAlign.gt-xs="space-between center"
+    >
+
+        <!-- APP TITLE -->
+        <div
+            fxLayout="row"
+            fxLayoutAlign="start center"
+        >
+
+            <!-- <button
+                mat-icon-button
+                class="sidebar-toggle mr-12"
+                fxHide.gt-md
+                (click)="toggleSidebar('position-main-sidebar')"
+            >
+                <mat-icon>menu</mat-icon>
+            </button> -->
+
+            <div
+                class="logo"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+            >
+                <mat-icon
+                    class="logo-icon mr-16"
+                    [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}"
+                >
+                    import_contacts
+                </mat-icon>
+                <span
+                    class="logo-text h1"
+                    [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}"
+                >
+                    Position
+                </span>
+            </div>
+
+        </div>
+        <!-- / APP TITLE -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CENTER -->
+    <div
+        class="center"
+        fxFlex
+    >
+
+        <!-- CONTENT -->
+        <div
+            class="content mat-white-bg"
+            fusePerfectScrollbar
+        >
+            <div class="content p-24">
+                <div class="position-viewer-wrapper mat-white-bg mat-elevation-z2">
+                    <div class="position-viewer-header">
+                        <div class="position-viewer-title">Featured Card</div>
+                    </div>
+                    <div class="position-viewer-source">
+                        <div class="tab-content"></div>
+                    </div>
+                    <div class="position-viewer-body">
+                        <form class="example-form">
+                            <mat-form-field class="example-full-width width-100">
+                                <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="positionSelects[0]" [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option *ngFor="let option of filteredOptions[0] | async" [value]="option.title">
+                                        {{option.title}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <mat-grid-list cols="3" rowHeight="2:1">
+                <mat-grid-tile *ngFor="let dummy of ' '.repeat(6).split('') let i = index" >
+                    <div class="position-viewer-wrapper mat-white-bg mat-elevation-z2">
+                        <div class="position-viewer-header">
+                            <div class="position-viewer-title">Featured Card</div>
+                        </div>
+                        <div class="position-viewer-source">
+                            <div class="tab-content"></div>
+                        </div>
+                        <div class="position-viewer-body">
+                            <form class="example-form">
+                                <mat-form-field class="example-full-width width-100">
+                                    <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="positionSelects[i+1]" [matAutocomplete]="auto">
+                                    <mat-autocomplete #auto="matAutocomplete">
+                                        <mat-option *ngFor="let option of filteredOptions[i+1] | async" [value]="option.title">
+                                            {{option.title}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </form>
+                        </div>
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <div class="content p-24">
+                <button
+                    class="mat-accent add-todo-button w-15-p mat-raised-button float-right"
+                    (click)="update()"
+                    mat-button
+                >
+                    SAVE
+                </button>
+            </div>
+        </div>
+        <!-- / CONTENT -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>
