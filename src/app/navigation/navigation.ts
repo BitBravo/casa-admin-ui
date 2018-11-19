@@ -91,15 +91,24 @@ export const navigation: FuseNavigation[] = [
             },
 
 
+            // {
+            //     id: 'featured',
+            //     title: 'Featured',
+            //     translate: 'NAV.FEATURED',
+            //     type: 'item',
+            //     icon: 'import_contacts',
+            //     url: '/apps/featured/'
+            // },
+
+            
             {
-                id: 'featured',
-                title: 'Featured',
-                translate: 'NAV.FEATURED',
+                id: 'position',
+                title: 'Featured Resources',
+                translate: 'NAV.POSITION',
                 type: 'item',
                 icon: 'import_contacts',
-                url: '/apps/featured/'
+                url: '/apps/position/'
             },
-
 
             {
                 id: 'redirectmanagement',
