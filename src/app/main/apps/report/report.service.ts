@@ -60,6 +60,6 @@ export class ReportService {
                 'Content-Type': 'application/json'
             })
         };
-        return this._httpClient.get(`${environment.apiUrl}/histories/aggregated?eventType=${filters}&start=${start}&end=${end}`, this.httpOptions);
+        return this._httpClient.get(`${environment.apiUrl}/histories?eventType=${filters}&start=${start}&end=${end}`, this.httpOptions);
     }
 }
