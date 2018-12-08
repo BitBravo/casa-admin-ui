@@ -21,7 +21,7 @@ export class ReportComponent implements OnInit, OnDestroy {
 
     // Private
     private _unsubscribeAll: Subject<any>;
-    options: string[] = ['Click', 'Download', 'Search', 'Views'];
+    options: string[] = ['Click', 'Download', 'Search', 'View'];
 
     constructor(
         private _reportService: ReportService
