@@ -27,7 +27,7 @@ export class FileManagerService implements Resolve<any>
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
-            'Authorization': "Bearer " + this.ldata.token
+            'Authorization': 'Bearer ' + this.ldata.token
         })
     };
 
@@ -87,7 +87,7 @@ export class FileManagerService implements Resolve<any>
         this.httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': "Bearer " + this.ldata.token
+                'Authorization': 'Bearer ' + this.ldata.token
             })
         };
 
@@ -97,14 +97,17 @@ export class FileManagerService implements Resolve<any>
             this._httpClient.get(`${environment.apiUrl}/resource/` + this.origin, this.httpOptions)
                 .subscribe((response: any) => {
                     this.files = response.data;
-                    //tocheck todo                    this.onFilesChanged.next(response);
+                    // tocheck todo          this.onFilesChanged.next(response);
                     if (this.searchText && this.searchText !== '') {
                         this.files = FuseUtils.filterArrayByString(this.files, this.searchText);
                     }
-                    if (this.files)
+                    
+                    if (this.files) {
                         this.files = this.files.map(file => {
                             return new FileData(file);
                         });
+                    }
+
                     this.onFilesChanged.next(this.files);
                     resolve(this.files);
                 }, reject);
@@ -183,7 +186,7 @@ export class FileManagerService implements Resolve<any>
         this.httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': "Bearer " + this.ldata.token
+                'Authorization': 'Bearer ' + this.ldata.token
             })
         };
         const fileIndex = this.files.indexOf(file);
@@ -202,7 +205,7 @@ export class FileManagerService implements Resolve<any>
         this.httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': "Bearer " + this.ldata.token
+                'Authorization': 'Bearer ' + this.ldata.token
             })
         };
         for (const fileId of this.selectedFiles) {
@@ -217,16 +220,13 @@ export class FileManagerService implements Resolve<any>
         return this._httpClient.post<any>(`${environment.apiUrl}/resource/delete`,
             { 'arr': this.selectedFiles }, this.httpOptions).
             subscribe(response => { this.deselectFiles(); });
-        ;
-
-
     }
 
     addFile(data) {
         this.ldata = JSON.parse(localStorage.getItem('currentUser'));
         this.httpOptions = {
             headers: new HttpHeaders({
-                'Authorization': "Bearer " + this.ldata.token
+                'Authorization': 'Bearer ' + this.ldata.token
             })
         };
 
@@ -239,7 +239,7 @@ export class FileManagerService implements Resolve<any>
         this.ldata = JSON.parse(localStorage.getItem('currentUser'));
         this.httpOptions = {
             headers: new HttpHeaders({
-                'Authorization': "Bearer " + this.ldata.token,
+                'Authorization': 'Bearer ' + this.ldata.token,
             })
         };
         return this._httpClient.put<any>(`${environment.apiUrl}/resource/` + id, data, this.httpOptions);
@@ -250,7 +250,7 @@ export class FileManagerService implements Resolve<any>
         this.ldata = JSON.parse(localStorage.getItem('currentUser'));
         this.httpOptions = {
             headers: new HttpHeaders({
-                'Authorization': "Bearer " + this.ldata.token,
+                'Authorization': 'Bearer ' + this.ldata.token,
             })
         };
         return this._httpClient.get<any>(`${environment.apiUrl}/audience/`, this.httpOptions);
@@ -260,7 +260,7 @@ export class FileManagerService implements Resolve<any>
         this.ldata = JSON.parse(localStorage.getItem('currentUser'));
         this.httpOptions = {
             headers: new HttpHeaders({
-                'Authorization': "Bearer " + this.ldata.token,
+                'Authorization': 'Bearer ' + this.ldata.token,
             })
         };
         return this._httpClient.get<any>(`${environment.apiUrl}/topic/`, this.httpOptions);
@@ -270,7 +270,7 @@ export class FileManagerService implements Resolve<any>
         this.ldata = JSON.parse(localStorage.getItem('currentUser'));
         this.httpOptions = {
             headers: new HttpHeaders({
-                'Authorization': "Bearer " + this.ldata.token,
+                'Authorization': 'Bearer ' + this.ldata.token,
             })
         };
         return this._httpClient.get<any>(`${environment.apiUrl}/type/`, this.httpOptions);

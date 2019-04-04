@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { Router,NavigationEnd,ActivatedRoute} from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute} from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { FileManagerService } from 'app/main/apps/file-manager/file-manager.service';
@@ -20,17 +20,18 @@ import { Location} from '@angular/common';
     animations   : fuseAnimations,
     providers: [Location],
 })
+
 export class FileManagerComponent implements OnInit, OnDestroy
 {
     navigationSubscription;
-    list:boolean=true;
+    list: boolean = true;
     showMenu:boolean = true;
-   dialogRef:any;
-   hasSelectedFiles: boolean | false;
-   showAdd: boolean=true;
-   add: boolean = false;
-   searchInput: FormControl;
-   location: Location;
+    dialogRef:any;
+    hasSelectedFiles: boolean | false;
+    showAdd: boolean = true;
+    add: boolean = false;
+    searchInput: FormControl;
+    location: Location;
     
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -47,8 +48,8 @@ export class FileManagerComponent implements OnInit, OnDestroy
         private router:Router,
         private route:ActivatedRoute, 
     )
-    {
 
+    {
        this.navigationSubscription = this.router.events.subscribe((e: any) => {
          // If it is a NavigationEnd event re-initalise the component
          if (e instanceof NavigationEnd) {
@@ -61,13 +62,13 @@ export class FileManagerComponent implements OnInit, OnDestroy
             ]).then(
                 ([files]) => {
 
-            if (this._fileManagerService.onSearchTextChanged.observers.length == 0)      
+            if (this._fileManagerService.onSearchTextChanged.observers.length === 0) {      
                this._fileManagerService.onSearchTextChanged.subscribe(searchText => {
-
                         this._fileManagerService.searchText = searchText;
                         this._fileManagerService.getFiles();
                     });
-                    //resolve();
+            }
+                    // resolve();
                 },
                 // reject
             ).catch((e) => console.log(e));
@@ -89,7 +90,7 @@ export class FileManagerComponent implements OnInit, OnDestroy
         this.list = true;
         this.add = false;
         this.showMenu = true;
-        this.showAdd = this._fileManagerService.origin != 'dynamic';
+        this.showAdd = this._fileManagerService.origin !== 'dynamic';
         // Set default values and re-fetch any data you need.
      }
 
@@ -121,7 +122,7 @@ export class FileManagerComponent implements OnInit, OnDestroy
         this.list = true;
         this.add = false;
         this.showMenu = true;
-        this.showAdd = this._fileManagerService.origin != 'dynamic';
+        this.showAdd = this._fileManagerService.origin !== 'dynamic';
     }
 
     /**
@@ -141,15 +142,14 @@ export class FileManagerComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-    newUpload(){
-        this.list=false;
+    newUpload() {
+        this.list = false;
         this.add = true;
     }
 
-    back()
-    {
-        this.list=true;
-        this.router.navigate(['/apps/resources/' +this._fileManagerService.origin]);
+    back() {
+        this.list = true;
+        this.router.navigate(['/apps/resources/' + this._fileManagerService.origin]);
     }
 
     listEditEventHander($event: any) {
@@ -157,8 +157,6 @@ export class FileManagerComponent implements OnInit, OnDestroy
         this.showMenu = false;
     }
 
-
-    
     /**
      * Toggle the sidebar
      *
