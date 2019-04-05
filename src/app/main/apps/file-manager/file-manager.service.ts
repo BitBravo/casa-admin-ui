@@ -40,7 +40,6 @@ export class FileManagerService implements Resolve<any>
         private _httpClient: HttpClient,
         private router: Router
     ) {
-
         // Set the defaults
         this.onFilesChanged = new BehaviorSubject({});
         this.onSelectedFilesChanged = new BehaviorSubject([]);
@@ -64,7 +63,6 @@ export class FileManagerService implements Resolve<any>
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
 
         return new Promise((resolve, reject) => {
-
             Promise.all([
                 this.getFiles()
             ]).then(
