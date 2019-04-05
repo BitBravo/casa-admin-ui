@@ -52,7 +52,7 @@ const appRoutes: Routes = [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        RouterModule.forRoot(appRoutes,{onSameUrlNavigation: 'reload'}),
+        RouterModule.forRoot(appRoutes, {onSameUrlNavigation: 'reload'}),
 
         TranslateModule.forRoot(),
         InMemoryWebApiModule.forRoot(FakeDbService, {
