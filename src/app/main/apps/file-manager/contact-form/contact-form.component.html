@@ -338,9 +338,9 @@
             >
                 Add CTA
             </button>
-            <!-- <button mat-raised-button class="example-delete-tab-button" [disabled]="getCTAs(fileDataGroup).length === 1" (click)="removeTab(index)">
-            Remove CTA
-        </button> -->
+            <button mat-raised-button class="example-delete-tab-button" [disabled]="getCTAs(fileDataGroup).length === 1" (click)="removeTab(selected.value)">
+                Remove CTA
+            </button>
         </div>
 
         <div formArrayName="cta">

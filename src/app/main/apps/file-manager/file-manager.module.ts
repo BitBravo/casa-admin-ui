@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NgxEditorModule } from 'ngx-editor';
 import { CdkTableModule } from '@angular/cdk/table';
-import {  MatSlideToggleModule,MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule, MatChipsModule, MatOptionModule, MatTabsModule } from '@angular/material';
+import {  MatSlideToggleModule, MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule, MatChipsModule, MatOptionModule, MatTabsModule } from '@angular/material';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseSidebarModule } from '@fuse/components';
 import { FuseConfirmDialogModule } from '@fuse/components';
@@ -23,7 +23,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { CKEditorModule } from 'ngx-ckeditor';
 import { UcWidgetModule } from 'ngx-uploadcare-widget';
-import { MatSortModule,MatPaginatorModule} from '@angular/material';
+import { MatSortModule, MatPaginatorModule} from '@angular/material';
 const routes: Routes = [
     {
         path     : '**',
@@ -48,7 +48,7 @@ const routes: Routes = [
         NgxEditorModule,
         RouterModule.forChild(routes),
         CdkTableModule,
-	    MatButtonModule,
+        MatButtonModule,
         MatSlideToggleModule,
         MatToolbarModule,
         MatCheckboxModule,
@@ -64,7 +64,7 @@ const routes: Routes = [
         MatChipsModule,
         MatOptionModule,
         MatSelectModule,
-	    FuseSharedModule,
+        FuseSharedModule,
         FuseSidebarModule,
         FuseConfirmDialogModule,
         CKEditorModule,
@@ -73,8 +73,7 @@ const routes: Routes = [
         MatSortModule,
         UcWidgetModule,
         MatPaginatorModule,
-        MatTabsModule
-            
+        MatTabsModule     
     ],
     providers   : [
         FileManagerService,

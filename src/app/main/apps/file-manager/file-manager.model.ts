@@ -90,8 +90,7 @@ export class FileData {
     }
 
 
-    //topics
-
+    // topics
     addTopic(event: MatChipInputEvent): void {
         const input = event.input;
         const value = event.value;
