@@ -1,11 +1,14 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup,Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-
 import { Role } from 'app/main/apps/roles/role.model';
 import {Router} from '@angular/router';
 
 import { RolesService } from 'app/main/apps/topic/roles.service';
+export interface Food {
+    value: string;
+    viewValue: string;
+  }
 @Component({
     selector     : 'roles-role-form-dialog',
     templateUrl  : './role-form.component.html',
@@ -21,7 +24,11 @@ export class RolesRoleFormDialogComponent
     roleForm: FormGroup;
     dialogTitle: string;
     register: string;
-    /**
+    foods: Food[] = [
+        {value: 'steak-0', viewValue: 'Steak'},
+        {value: 'pizza-1', viewValue: 'Pizza'},
+        {value: 'tacos-2', viewValue: 'Tacos'}
+      ];    /**
      * Constructor
      *
      * @param {MatDialogRef<RolesRoleFormDialogComponent>} matDialogRef
@@ -38,7 +45,7 @@ export class RolesRoleFormDialogComponent
     {
         // Set the defaults
         this.action = _data.action;
-
+       
         if ( this.action === 'edit' )
         {
             this.dialogTitle = 'Edit Topic';
@@ -66,10 +73,8 @@ export class RolesRoleFormDialogComponent
     {
        return this._formBuilder.group({
            id : [this.role.id],
-           name : [this.role.name,[Validators.required]]
-           
-                 });
-   
+           name : [this.role.name, [Validators.required]]
+        });
     }
 
   
@@ -77,14 +82,13 @@ export class RolesRoleFormDialogComponent
     { 
      var response : any;
      this.rolesService.addRole(roleForm.value).
-            subscribe(
-	    	data => {this.matDialogRef.close();
-                        this.rolesService.getRoles();}, 
-	         err => {
-	             this.register = err.error.message;
-	         }, 
-	         () => console.log('yay')); 
-                   
+        subscribe(
+        data => {this.matDialogRef.close();
+                    this.rolesService.getRoles();}, 
+            err => {
+                this.register = err.error.message;
+            }, 
+            () => console.log('yay'));        
      }    
 
 

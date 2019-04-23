@@ -28,7 +28,7 @@ export class RolesRoleListComponent implements OnInit, OnDestroy
     roles: any;
     role: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['checkbox', 'title', 'created_by',  'buttons'];
+    displayedColumns = ['checkbox', 'title', 'category', 'created_by',  'buttons'];
     selectedRoles: any[];
     checkboxes: {};
 
@@ -62,10 +62,11 @@ export class RolesRoleListComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this.dataSource = new FilesDataSource(this._rolesService,this.paginator,this.sort);
+        this.dataSource = new FilesDataSource(this._rolesService, this.paginator, this.sort);
         this._rolesService.onRolesChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(roles => {
+                console.log('roles ===> ', roles)
                 this.roles = roles;
                 this.checkboxes = {};
                 roles.map(role => {

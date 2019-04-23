@@ -79,7 +79,7 @@ const routes = [
     imports     : [
     RouterModule.forChild(routes),
     FuseSharedModule,
-    MatSortModule
+    MatSortModule,
     ],
     declarations: []
 })
