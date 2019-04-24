@@ -71,12 +71,12 @@ export class RolesRoleListComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.dataSource = new FilesDataSource(this._rolesService, this.paginator, this.sort);
-        this._rolesService.onRolesChanged
+        this._rolesService.onRolesChanged 
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(roles => {
     
+                console.log(roles)
                 this.roles = roles;
-
                 this.checkboxes = {};
                 roles.map((role) => {
                     this.checkboxes[role.id] = false;

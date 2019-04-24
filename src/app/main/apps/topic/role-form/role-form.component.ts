@@ -21,7 +21,7 @@ export class RolesRoleFormDialogComponent
     roleForm: FormGroup;
     dialogTitle: string;
     register: string;
-    categories: []; 
+    categories: any = []; 
     /**
      * Constructor
      *
