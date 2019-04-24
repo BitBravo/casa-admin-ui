@@ -32,10 +32,10 @@
                             required
                         >
                             <mat-option
-                                *ngFor="let food of  foods"
-                                [value]="food.value"
+                                *ngFor="let category of  categories"
+                                [value]="category"
                             >
-                                {{food.value}}
+                                {{category}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>

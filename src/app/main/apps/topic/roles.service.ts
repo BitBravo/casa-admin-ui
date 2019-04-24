@@ -216,6 +216,22 @@ export class RolesService implements Resolve<any>
       
     }
 
+     /**
+     * get category
+     *
+     * @param role
+     */
+    getCategory ()
+    {  
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type':  'application/json',
+                'Authorization': 'Bearer ' + this.ldata.token
+            })
+        };
+       return this._httpClient.get<any>(`${environment.apiUrl}/categories/`, this.httpOptions);
+   }
+
     /**
      * Delete selected roles
      */

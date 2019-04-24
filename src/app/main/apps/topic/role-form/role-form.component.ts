@@ -5,10 +5,7 @@ import { Role } from 'app/main/apps/roles/role.model';
 import {Router} from '@angular/router';
 
 import { RolesService } from 'app/main/apps/topic/roles.service';
-export interface Food {
-    value: string;
-    viewValue: string;
-  }
+
 @Component({
     selector     : 'roles-role-form-dialog',
     templateUrl  : './role-form.component.html',
@@ -24,11 +21,8 @@ export class RolesRoleFormDialogComponent
     roleForm: FormGroup;
     dialogTitle: string;
     register: string;
-    foods: Food[] = [
-        {value: 'steak-0', viewValue: 'Steak'},
-        {value: 'pizza-1', viewValue: 'Pizza'},
-        {value: 'tacos-2', viewValue: 'Tacos'}
-      ];    /**
+    categories: []; 
+    /**
      * Constructor
      *
      * @param {MatDialogRef<RolesRoleFormDialogComponent>} matDialogRef
@@ -45,6 +39,7 @@ export class RolesRoleFormDialogComponent
     {
         // Set the defaults
         this.action = _data.action;
+        this.getCategory();
        
         if ( this.action === 'edit' )
         {
@@ -73,7 +68,8 @@ export class RolesRoleFormDialogComponent
     {
        return this._formBuilder.group({
            id : [this.role.id],
-           name : [this.role.name, [Validators.required]]
+           name : [this.role.name, [Validators.required]],
+           category: [this.role.category]
         });
     }
 
@@ -92,18 +88,26 @@ export class RolesRoleFormDialogComponent
      }    
 
 
-     updateRole(roleForm)
-    { 
-     var response : any;
-     this.rolesService.editRole(roleForm.value).
-            subscribe(
-	    	data => {this.matDialogRef.close();
-                        this.rolesService.getRoles();}, 
-	         err => {
-	             this.register = err.error.message;
-	         }, 
-	         () => console.log('yay')); 
-                   
-     }    
+    updateRole(roleForm)
+    {
+        var response : any;
+        this.rolesService.editRole(roleForm.value).subscribe (data => {
+            this.matDialogRef.close();
+            this.rolesService.getRoles();
+        }, err => {
+            this.register = err.error.message;
+        },
+        () => console.log('yay'));             
+     }
+
+    getCategory ()
+    {
+        var response : any;
+        this.rolesService.getCategory().subscribe (response => {
+            this.categories = response.data;
+        }, err => {
+        },
+        () => console.log('yay'));             
+     }
              
 }
