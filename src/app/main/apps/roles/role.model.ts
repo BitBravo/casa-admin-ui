@@ -2,13 +2,14 @@ import { FuseUtils } from '@fuse/utils';
 
 export class Role
 {
-    id:string;
-    name:string;
-    admin_email:string;
-    url:string;
-    redirect_url:string;
-    hits:number;
-    updatedAt:string;
+    id: string;
+    name: string;
+    admin_email: string;
+    url: string;
+    redirect_url: string;
+    hits: number;
+    updatedAt: string;
+    category: string;
     /**
      * Constructor
      *
@@ -16,13 +17,14 @@ export class Role
      */
     constructor(role)
     {
-            this.id =role._id;
-            this.name = role.name||'';
+            this.id = role._id;
+            this.name = role.name || '';
             this.admin_email = role.admin_email || '';
-            this.url = role.url||'';
+            this.url = role.url || '';
             this.redirect_url = role.redirect_url || '';
             this.hits = role.hits;
             this.updatedAt = role.updatedAt;
+            this.category = role.category;
 
     }
     

@@ -95,7 +95,7 @@ export class RolesService implements Resolve<any>
 
         return new Promise((resolve, reject) => {
             
-                this._httpClient.get(`${environment.apiUrl}/topic?count=1000`,this.httpOptions)
+                this._httpClient.get(`${environment.apiUrl}/topic?count=1000`, this.httpOptions)
                     .subscribe((response: any) => {
                   
                         this.roles = response.data;
@@ -216,6 +216,22 @@ export class RolesService implements Resolve<any>
       
     }
 
+     /**
+     * get category
+     *
+     * @param role
+     */
+    getCategory ()
+    {  
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type':  'application/json',
+                'Authorization': 'Bearer ' + this.ldata.token
+            })
+        };
+       return this._httpClient.get<any>(`${environment.apiUrl}/categories/`, this.httpOptions);
+   }
+
     /**
      * Delete selected roles
      */
@@ -269,7 +285,7 @@ export class RolesService implements Resolve<any>
                   'Authorization': "Bearer "+this.ldata.token
             })
         };
-        return this._httpClient.put<any>(`${environment.apiUrl}/topic/`+role.id,role ,this.httpOptions);
+        return this._httpClient.put<any>(`${environment.apiUrl}/topic/` + role.id, role, this.httpOptions);
    }
 
 }

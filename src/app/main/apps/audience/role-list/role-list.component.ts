@@ -81,7 +81,6 @@ export class RolesRoleListComponent implements OnInit, OnDestroy
                     {
                         continue;
                     }
-
                     this.checkboxes[id] = selectedRoles.includes(id);
                 }
                 this.selectedRoles = selectedRoles;

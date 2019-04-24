@@ -10,6 +10,14 @@ import { RolesService } from 'app/main/apps/topic/roles.service';
 import { RolesRoleFormDialogComponent } from 'app/main/apps/topic/role-form/role-form.component';
 import {MatSort,MatPaginator} from '@angular/material';
 import { FuseUtils } from '@fuse/utils';
+
+export interface CatetoryInstance {
+    id: string;
+    name: string;
+    admin_email: string;
+    category: string;
+}
+
 @Component({
     selector     : 'roles-role-list',
     templateUrl  : './role-list.component.html',
@@ -25,10 +33,10 @@ export class RolesRoleListComponent implements OnInit, OnDestroy
         sort:MatSort;
     @ViewChild(MatPaginator)
         paginator:MatPaginator;
-    roles: any;
+    roles: CatetoryInstance [];
     role: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['checkbox', 'title', 'created_by',  'buttons'];
+    displayedColumns = ['checkbox', 'title', 'category', 'created_by',  'buttons'];
     selectedRoles: any[];
     checkboxes: {};
 
@@ -62,13 +70,15 @@ export class RolesRoleListComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this.dataSource = new FilesDataSource(this._rolesService,this.paginator,this.sort);
-        this._rolesService.onRolesChanged
+        this.dataSource = new FilesDataSource(this._rolesService, this.paginator, this.sort);
+        this._rolesService.onRolesChanged 
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(roles => {
+    
+                console.log(roles)
                 this.roles = roles;
                 this.checkboxes = {};
-                roles.map(role => {
+                roles.map((role) => {
                     this.checkboxes[role.id] = false;
                 });
             });
