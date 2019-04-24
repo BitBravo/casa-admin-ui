@@ -74,7 +74,7 @@ const appRoutes: Routes = [
 
         // App modules
         LayoutModule,
-        AppStoreModule
+        AppStoreModule,
     ],
     bootstrap   : [
         AppComponent
