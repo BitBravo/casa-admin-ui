@@ -102,7 +102,6 @@ export class RolesRoleFormDialogComponent
 
     getCategory ()
     {
-        var response : any;
         this.rolesService.getCategory().subscribe (response => {
             this.categories = response.data;
         }, err => {
