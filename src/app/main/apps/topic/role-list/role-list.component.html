@@ -22,7 +22,15 @@
         </mat-cell>
     </ng-container>
 
-    <!-- Email Column -->
+     <!-- Name Column -->
+     <ng-container cdkColumnDef="category">
+            <mat-header-cell *cdkHeaderCellDef mat-sort-header>Category</mat-header-cell>
+            <mat-cell *cdkCellDef="let role">
+                <p class="text-truncate font-weight-600">{{role.category}}</p>
+            </mat-cell>
+        </ng-container>
+
+    <!-- Created date Column -->
    
     <ng-container cdkColumnDef="created_by">
         <mat-header-cell *cdkHeaderCellDef mat-sort-header>Created By</mat-header-cell>
