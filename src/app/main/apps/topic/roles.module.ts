@@ -13,7 +13,7 @@ import { RolesRoleListComponent } from 'app/main/apps/topic/role-list/role-list.
 import { RolesSelectedBarComponent } from 'app/main/apps/topic/selected-bar/selected-bar.component';
 import { RolesRoleFormDialogComponent } from 'app/main/apps/topic/role-form/role-form.component';
 import { RolesMainSidebarComponent } from 'app/main/apps/topic/sidebars/main/main.component';
-import {MatSortModule,MatPaginatorModule} from '@angular/material';
+import { MatSortModule, MatPaginatorModule, MatSelectModule } from '@angular/material';
 const routes: Routes = [
     {
         path     : '**',
@@ -50,7 +50,8 @@ const routes: Routes = [
         FuseSidebarModule,
         FuseConfirmDialogModule,
         MatSortModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatSelectModule,
     ],
     providers      : [
         RolesService
